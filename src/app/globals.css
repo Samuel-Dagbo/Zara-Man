@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #FFF8F0;
+  color: #2C1810;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+::selection {
+  background-color: #C8A45C;
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F5F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C8A45C;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8860B;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-espresso text-cream px-8 py-3 rounded-none font-medium 
+           tracking-wider uppercase text-sm transition-all duration-300
+           hover:bg-gold-500 hover:text-espresso;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-espresso text-espresso px-8 py-3 rounded-none 
+           font-medium tracking-wider uppercase text-sm transition-all duration-300
+           hover:bg-espresso hover:text-cream;
+  }
+
+  .btn-gold {
+    @apply bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-3 
+           rounded-none font-medium tracking-wider uppercase text-sm 
+           transition-all duration-300 hover:from-gold-600 hover:to-gold-700
+           shadow-lg hover:shadow-xl;
+  }
+
+  .section-heading {
+    @apply text-4xl md:text-5xl font-display font-semibold text-espresso mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-luxury-500 text-lg max-w-2xl mx-auto;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-luxury-200 bg-white rounded-none
+           focus:ring-2 focus:ring-gold-500 focus:border-gold-500 
+           transition-all duration-200 outline-none text-espresso;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

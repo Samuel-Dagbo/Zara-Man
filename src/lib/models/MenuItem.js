@@ -1,0 +1,31 @@
+import mongoose from 'mongoose';
+
+const ProductSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true, trim: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true, min: 0 },
+    comparePrice: { type: Number, default: 0 },
+    category: {
+      type: String,
+      required: true,
+      enum: ['dresses', 'tops', 'bottoms', 'outerwear', 'accessories', 'jewelry', 'bags', 'shoes', 'new-arrivals'],
+    },
+    subcategory: { type: String, default: '' },
+    images: [{ type: String }],
+    sizes: [{ type: String }],
+    colors: [{ type: String }],
+    tags: [{ type: String }],
+    inStock: { type: Boolean, default: true },
+    quantity: { type: Number, default: 10 },
+    featured: { type: Boolean, default: false },
+    onSale: { type: Boolean, default: false },
+    rating: { type: Number, default: 0, min: 0, max: 5 },
+    numReviews: { type: Number, default: 0 },
+    material: { type: String, default: '' },
+    careInstructions: { type: String, default: '' },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.models.Product || mongoose.model('Product', ProductSchema);
