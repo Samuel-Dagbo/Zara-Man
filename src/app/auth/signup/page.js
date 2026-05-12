@@ -54,7 +54,7 @@ export default function SignUpPage() {
     <div className="min-h-screen flex bg-cream pt-20">
       <div className="hidden lg:block lg:w-1/2 relative">
         <img
-          src="https://images.unsplash.com/photo-1553034545-4d879681c5d1?w=1200&q=80"
+          src="https://images.pexels.com/photos/29239014/pexels-photo-29239014.jpeg"
           alt="Men's fashion"
           className="absolute inset-0 w-full h-full object-cover"
         />

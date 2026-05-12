@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { signIn, getSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -28,7 +28,12 @@ export default function SignInPage() {
       if (result.error) {
         setError('Invalid email or password');
       } else {
-        router.push('/');
+        const session = await getSession();
+        if (session?.user?.role === 'admin') {
+          router.push('/dashboard/admin');
+        } else {
+          router.push('/dashboard/user');
+        }
         router.refresh();
       }
     } catch (err) {
@@ -42,7 +47,7 @@ export default function SignInPage() {
     <div className="min-h-screen flex bg-cream pt-20">
       <div className="hidden lg:block lg:w-1/2 relative">
         <img
-          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80"
+          src="https://images.pexels.com/photos/5452268/pexels-photo-5452268.jpeg"
           alt="Men's fashion"
           className="absolute inset-0 w-full h-full object-cover"
         />

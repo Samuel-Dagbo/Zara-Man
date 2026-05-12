@@ -161,9 +161,13 @@ export default function ShopPage() {
                           e.stopPropagation();
                           addToCart(product, 1);
                         }}
-                        className="absolute bottom-4 right-4 bg-cream text-espresso p-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-gold-500 hover:text-white"
+                        className="absolute bottom-4 right-4 bg-espresso text-cream p-3 shadow-lg hover:bg-gold-500 hover:text-espresso transition-all duration-300 group/btn"
+                        title="Quick add to cart"
                       >
                         <HiOutlineShoppingBag className="w-5 h-5" />
+                        <span className="absolute -top-8 right-0 bg-espresso text-cream text-[10px] tracking-wider uppercase px-2 py-1 whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none">
+                          Add to Cart
+                        </span>
                       </button>
                     </div>
                     <div className="mt-4">

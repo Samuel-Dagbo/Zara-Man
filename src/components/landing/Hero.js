@@ -1,155 +1,201 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
-const floatingShapes = [
-  { size: 'w-24 h-24', top: '15%', left: '5%', delay: 0 },
-  { size: 'w-16 h-16', top: '25%', right: '10%', delay: 0.3 },
-  { size: 'w-32 h-32', bottom: '20%', right: '5%', delay: 0.6 },
-];
-
-const stagger = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15 },
-  },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-};
-
 export default function Hero() {
+  const sectionRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const imageParallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
+  const fadeOut = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-espresso pt-20">
-      <motion.div
-        initial={{ scale: 1.15 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 8, ease: 'easeOut' }}
-        className="absolute inset-0"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-espresso/95 via-espresso/60 to-espresso/30 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-espresso via-transparent to-espresso/20 z-10" />
-        <img
-          src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=1920&q=80"
-          alt="Men's luxury fashion"
-          className="w-full h-full object-cover"
-        />
-      </motion.div>
+    <section ref={sectionRef} className="relative h-screen overflow-hidden bg-espresso">
+      <div className="absolute inset-0 flex">
+        {/* Left side */}
+        <div className="hidden lg:flex w-1/2 h-full bg-espresso relative z-10 overflow-hidden">
+          {/* Grain texture */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              backgroundSize: '256px 256px',
+              opacity: 0.035,
+            }}
+          />
 
-      {floatingShapes.map((shape, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.08, y: [0, -15, 0] }}
-          transition={{ opacity: { delay: 1 + shape.delay, duration: 1.5 }, y: { repeat: Infinity, duration: 6 + i * 2, ease: 'easeInOut' } }}
-          className={`absolute ${shape.size} border border-gold-500 rounded-full pointer-events-none`}
-          style={{ top: shape.top, left: shape.left, right: shape.right, bottom: shape.bottom }}
-        />
-      ))}
+          {/* Decorative "2026" background */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none">
+            <span className="block text-[200px] font-display font-bold text-cream/[0.025] leading-none tracking-tight">
+              2026
+            </span>
+          </div>
 
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate="show"
-          className="max-w-3xl"
-        >
-          <motion.div variants={fadeUp} className="overflow-hidden">
-            <motion.span
-              initial={{ y: '100%' }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-3 text-gold-500 tracking-[0.3em] uppercase text-sm font-medium mb-8"
+          {/* Content */}
+          <div className="flex flex-col justify-center w-full h-full pt-28 pb-12 px-12 xl:px-20 relative">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="w-8 h-[1px] bg-gold-500/60" />
-              New Collection 2026
-              <span className="w-8 h-[1px] bg-gold-500/60" />
-            </motion.span>
-          </motion.div>
-
-          <motion.h1
-            variants={fadeUp}
-            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-bold text-cream leading-[0.9] tracking-tight"
-          >
-            Redefine
-            <br />
-            <span className="text-gradient-light">Masculine</span>
-            <br />
-            Elegance
-          </motion.h1>
-
-          <motion.p
-            variants={fadeUp}
-            className="mt-8 text-lg md:text-xl text-cream/60 max-w-xl leading-relaxed font-light"
-          >
-            Curated collections of premium menswear and accessories for the modern gentleman who appreciates refined craftsmanship.
-          </motion.p>
-
-          <motion.div variants={fadeUp} className="mt-12 flex flex-wrap gap-5">
-            <Link
-              href="/shop"
-              className="group bg-gold-500 text-espresso px-10 py-4 tracking-[0.2em] uppercase text-sm font-medium 
-                         hover:bg-gold-400 transition-all duration-500 flex items-center gap-3 relative overflow-hidden"
-            >
-              <span className="relative z-10">Explore Collection</span>
-              <HiOutlineArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform relative z-10" />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            </Link>
-            <Link
-              href="/about"
-              className="group border border-cream/20 text-cream px-10 py-4 tracking-[0.2em] uppercase text-sm font-medium 
-                         hover:bg-cream hover:text-espresso transition-all duration-500 flex items-center gap-2 backdrop-blur-sm"
-            >
-              Our Story
-              <HiOutlineArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-            </Link>
-          </motion.div>
-
-          <motion.div variants={scaleIn} className="mt-20 flex gap-12 md:gap-16">
-            {[
-              { value: '500+', label: 'Crafted Pieces' },
-              { value: '10K+', label: 'Gentlemen Served' },
-              { value: '50+', label: 'Designer Brands' },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
+              <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.5 + i * 0.15, duration: 0.6 }}
-                className="relative"
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="inline-flex items-center gap-3 text-gold-500 tracking-[0.25em] uppercase text-xs font-semibold mb-10"
               >
-                <p className="font-display text-4xl md:text-5xl text-gradient font-bold">{stat.value}</p>
-                <p className="text-cream/40 text-xs tracking-[0.2em] uppercase mt-2 font-light">{stat.label}</p>
+                <span className="w-10 h-px bg-gold-500" />
+                New Collection 2026
+              </motion.span>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="text-6xl sm:text-7xl lg:text-8xl font-display font-bold text-cream leading-[0.88] tracking-tight"
+              >
+                Redefine
+                <br />
+                <span className="text-gradient-light">Masculine</span>
+                <br />
+                Elegance
+              </motion.h1>
+
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="h-px bg-gradient-to-r from-gold-500/80 to-transparent w-20 mt-8 origin-left"
+              />
+
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-6 text-base text-cream/50 max-w-sm leading-relaxed font-light"
+              >
+                Curated collections of premium menswear and accessories for the modern gentleman who appreciates refined craftsmanship.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-10 flex items-center gap-6"
+              >
+                <Link
+                  href="/shop"
+                  className="group relative bg-gold-500 text-espresso px-10 py-5 tracking-[0.2em] uppercase text-xs font-semibold overflow-hidden flex items-center gap-3"
+                >
+                  <span className="relative z-10">Explore Collection</span>
+                  <HiOutlineArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                </Link>
+                <Link
+                  href="/about"
+                  className="group text-cream/70 hover:text-cream tracking-[0.2em] uppercase text-xs font-semibold flex items-center gap-3 transition-colors duration-300"
+                >
+                  <span>Our Story</span>
+                  <HiOutlineArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </Link>
               </motion.div>
-            ))}
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Right side - Image with parallax */}
+        <div className="w-full lg:w-1/2 h-full relative overflow-hidden">
+          <motion.div style={{ y: imageParallaxY }} className="absolute inset-0 will-change-transform">
+            <Image
+              src="https://images.pexels.com/photos/6626361/pexels-photo-6626361.jpeg?auto=compress&cs=tinysrgb&w=1920"
+              alt="Elegant menswear"
+              fill
+              className="object-cover object-top"
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
           </motion.div>
-        </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-r from-espresso/40 via-espresso/10 to-transparent lg:bg-gradient-to-l lg:from-espresso/30 lg:to-transparent" />
+        </div>
       </div>
 
+      {/* Mobile overlay content */}
+      <div className="absolute inset-0 z-10 lg:hidden bg-gradient-to-r from-espresso via-espresso/70 to-transparent">
+        <div className="flex flex-col justify-center h-full pt-24 px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="inline-flex items-center gap-3 text-gold-500 tracking-[0.2em] uppercase text-[10px] font-semibold mb-6">
+              <span className="w-8 h-px bg-gold-500" />
+              New Collection 2026
+            </span>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-cream leading-[0.9] tracking-tight">
+              Redefine
+              <br />
+              <span className="text-gradient-light">Masculine</span>
+              <br />
+              Elegance
+            </h1>
+
+            <p className="mt-5 text-sm text-cream/50 max-w-xs leading-relaxed font-light">
+              Curated collections of premium menswear and accessories for the modern gentleman.
+            </p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-8 flex items-center gap-5"
+            >
+              <Link
+                href="/shop"
+                className="group relative bg-gold-500 text-espresso px-8 py-4 tracking-[0.15em] uppercase text-[10px] font-semibold overflow-hidden flex items-center gap-2"
+              >
+                <span className="relative z-10">Explore</span>
+                <HiOutlineArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300 relative z-10" />
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              </Link>
+              <Link
+                href="/about"
+                className="text-cream/70 hover:text-cream tracking-[0.15em] uppercase text-[10px] font-semibold flex items-center gap-2 transition-colors duration-300"
+              >
+                <span>Our Story</span>
+                <HiOutlineArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
       <motion.div
+        style={{ opacity: fadeOut }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+        transition={{ delay: 1.2, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden lg:flex flex-col items-center gap-3"
       >
-        <span className="text-cream/30 text-[10px] tracking-[0.3em] uppercase">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-cream/40 to-transparent relative overflow-hidden">
-          <motion.div
-            animate={{ y: [-24, 24] }}
-            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            className="w-full h-1/3 bg-gold-500"
+        <svg width="20" height="32" viewBox="0 0 20 32" fill="none" className="text-cream/25">
+          <rect x="1.5" y="1.5" width="17" height="29" rx="8.5" stroke="currentColor" strokeWidth="1.5" />
+          <motion.circle
+            cx="10" cy="10" r="2.5"
+            fill="currentColor"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />
-        </div>
+        </svg>
+        <span className="text-cream/20 text-[9px] tracking-[0.35em] uppercase">Scroll</span>
       </motion.div>
     </section>
   );
