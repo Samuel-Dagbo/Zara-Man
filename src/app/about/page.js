@@ -16,18 +16,19 @@ export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <main>
-        <section className="relative pt-32 pb-20 bg-espresso overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1920&q=80" alt="Fashion background" className="w-full h-full object-cover" />
+      <main className="pt-20">
+        <section className="relative py-32 bg-espresso overflow-hidden">
+          <div className="absolute inset-0 opacity-30">
+            <img src="https://images.unsplash.com/photo-1553034545-4d879681c5d1?w=1920&q=80" alt="Men's fashion" className="w-full h-full object-cover" />
           </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-espresso/80 via-espresso/60 to-espresso" />
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
               <span className="text-gold-500 tracking-[0.3em] uppercase text-sm">Our Story</span>
-              <h1 className="text-5xl md:text-7xl font-display text-cream font-bold mt-4">The Art of Luxury</h1>
+              <h1 className="text-5xl md:text-7xl font-display text-cream font-bold mt-4">The Art of Menswear</h1>
               <p className="text-cream/60 text-lg max-w-3xl mx-auto mt-6 leading-relaxed">
                 Born from a passion for timeless elegance, Boutique is more than a fashion destination — 
-                it is a celebration of craftsmanship, individuality, and the beauty of refined living.
+                Zara Man 247 is a celebration of craftsmanship, individuality, and the beauty of refined living for the modern gentleman.
               </p>
             </motion.div>
           </div>
@@ -47,19 +48,19 @@ export default function AboutPage() {
                 </h2>
                 <div className="space-y-4 text-luxury-600 leading-relaxed">
                   <p>
-                    Founded in 2024, Boutique emerged from a simple belief: that fashion should be an 
+                    Founded in 2024, Zara Man 247 emerged from a simple belief: that men&apos;s fashion should be an 
                     experience, not just a transaction. Our founders, lifelong connoisseurs of style, 
-                    envisioned a space where every piece tells a story.
+                    envisioned a space where every piece tells a story of refined masculinity.
                   </p>
                   <p>
-                    We travel the globe to discover emerging designers and established artisans who 
+                    We travel the globe to discover emerging designers and established ateliers who 
                     share our commitment to exceptional quality. Each collection is handpicked to 
-                    offer our clients a curated journey through the worlds finest fashion.
+                    offer our clients a curated journey through the world&apos;s finest menswear.
                   </p>
                   <p>
                     From our atelier to your wardrobe, every detail is considered. We believe that 
                     true luxury lies in the harmony of impeccable design, superior materials, and 
-                    the joy of self-expression.
+                    the confidence of self-expression.
                   </p>
                 </div>
               </motion.div>
@@ -71,8 +72,8 @@ export default function AboutPage() {
               >
                 <div className="aspect-[4/5] overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80"
-                    alt="Boutique atelier"
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+                    alt="Zara Man 247 atelier"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -128,8 +129,8 @@ export default function AboutPage() {
               >
                 <div className="aspect-[4/5] overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1583391733956-6c7c1c5d64f8?w=800&q=80"
-                    alt="Boutique studio"
+                    src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&q=80"
+                    alt="Zara Man 247 craftsmanship"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -150,8 +151,8 @@ export default function AboutPage() {
                 </h2>
                 <div className="space-y-4 text-luxury-600 leading-relaxed">
                   <p>
-                    At Boutique, we believe that true luxury is personal. Its about the way a fabric 
-                    feels against your skin, the confidence a well-tailored piece inspires, and the 
+                    At Zara Man 247, we believe that true luxury is personal. It&apos;s about the way a fabric 
+                    feels against your skin, the confidence a well-tailored suit inspires, and the 
                     joy of owning something truly special.
                   </p>
                   <p>
@@ -160,7 +161,7 @@ export default function AboutPage() {
                     We are here to help you build a wardrobe that reflects your individuality.
                   </p>
                   <p>
-                    Welcome to Boutique. Welcome to a world where elegance knows no bounds.
+                    Welcome to Zara Man 247. Welcome to a world where masculine elegance knows no bounds.
                   </p>
                 </div>
               </motion.div>

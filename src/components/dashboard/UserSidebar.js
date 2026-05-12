@@ -18,7 +18,7 @@ export default function UserSidebar() {
     <aside className="w-64 bg-white border-r border-luxury-100 min-h-screen flex flex-col">
       <div className="p-6 border-b border-luxury-100">
         <Link href="/" className="font-display text-xl font-bold text-espresso tracking-wider">
-          BOUTIQUE
+          ZARA MAN 247
         </Link>
       </div>
 

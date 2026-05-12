@@ -39,11 +39,11 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-cream">
+    <div className="min-h-screen flex bg-cream pt-20">
       <div className="hidden lg:block lg:w-1/2 relative">
         <img
-          src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&q=80"
-          alt="Fashion"
+          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80"
+          alt="Men's fashion"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-espresso/80 to-transparent" />
@@ -60,7 +60,7 @@ export default function SignInPage() {
           className="w-full max-w-md"
         >
           <Link href="/" className="font-display text-3xl font-bold text-espresso tracking-wider block mb-12">
-            BOUTIQUE
+            ZARA MAN 247
           </Link>
 
           <h1 className="text-3xl font-display font-bold text-espresso">Sign In</h1>

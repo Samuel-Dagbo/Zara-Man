@@ -1,7 +1,7 @@
 export function formatPrice(price) {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-GH', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'GHS',
   }).format(price);
 }
 
@@ -17,15 +17,15 @@ export function generateOrderNumber() {
 }
 
 export const categories = [
-  { id: 'all', name: 'All', icon: '✨' },
-  { id: 'dresses', name: 'Dresses', icon: '👗' },
-  { id: 'tops', name: 'Tops', icon: '👚' },
-  { id: 'bottoms', name: 'Bottoms', icon: '👖' },
+  { id: 'all', name: 'All', icon: '✦' },
+  { id: 'suits', name: 'Suits & Blazers', icon: '🎯' },
+  { id: 'shirts', name: 'Shirts', icon: '👔' },
+  { id: 'pants', name: 'Pants & Trousers', icon: '👖' },
   { id: 'outerwear', name: 'Outerwear', icon: '🧥' },
-  { id: 'accessories', name: 'Accessories', icon: '👜' },
-  { id: 'jewelry', name: 'Jewelry', icon: '💎' },
-  { id: 'bags', name: 'Bags', icon: '👛' },
-  { id: 'shoes', name: 'Shoes', icon: '👠' },
+  { id: 'shoes', name: 'Shoes', icon: '👞' },
+  { id: 'watches', name: 'Watches', icon: '⌚' },
+  { id: 'accessories', name: 'Accessories', icon: '💼' },
+  { id: 'bags', name: 'Bags & Luggage', icon: '👜' },
   { id: 'new-arrivals', name: 'New Arrivals', icon: '⭐' },
 ];
 

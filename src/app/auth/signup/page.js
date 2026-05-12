@@ -51,17 +51,17 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-cream">
+    <div className="min-h-screen flex bg-cream pt-20">
       <div className="hidden lg:block lg:w-1/2 relative">
         <img
-          src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80"
-          alt="Fashion"
+          src="https://images.unsplash.com/photo-1553034545-4d879681c5d1?w=1200&q=80"
+          alt="Men's fashion"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-espresso/80 to-transparent" />
         <div className="absolute bottom-12 left-12 text-cream">
-          <h2 className="font-display text-4xl font-bold">Join Boutique</h2>
-          <p className="text-cream/70 mt-2">Become part of our exclusive fashion community.</p>
+          <h2 className="font-display text-4xl font-bold">Join Zara Man 247</h2>
+          <p className="text-cream/70 mt-2">Become part of our exclusive fashion community for gentlemen.</p>
         </div>
       </div>
 
@@ -72,7 +72,7 @@ export default function SignUpPage() {
           className="w-full max-w-md"
         >
           <Link href="/" className="font-display text-3xl font-bold text-espresso tracking-wider block mb-12">
-            BOUTIQUE
+            ZARA MAN 247
           </Link>
 
           <h1 className="text-3xl font-display font-bold text-espresso">Create Account</h1>

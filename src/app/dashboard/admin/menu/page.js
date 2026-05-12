@@ -15,7 +15,7 @@ export default function AdminProductsPage() {
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [form, setForm] = useState({
-    name: '', description: '', price: '', comparePrice: '', category: 'dresses',
+    name: '', description: '', price: '', comparePrice: '', category: 'suits',
     images: [''], sizes: [], colors: [], tags: [], material: '',
     careInstructions: '', inStock: true, featured: false, onSale: false,
     rating: 0, numReviews: 0,
@@ -34,7 +34,7 @@ export default function AdminProductsPage() {
   const openCreate = () => {
     setEditingProduct(null);
     setForm({
-      name: '', description: '', price: '', comparePrice: '', category: 'dresses',
+      name: '', description: '', price: '', comparePrice: '', category: 'suits',
       images: [''], sizes: [], colors: [], tags: [], material: '',
       careInstructions: '', inStock: true, featured: false, onSale: false,
       rating: 0, numReviews: 0,
@@ -49,7 +49,7 @@ export default function AdminProductsPage() {
       description: product.description || '',
       price: product.price?.toString() || '',
       comparePrice: product.comparePrice?.toString() || '',
-      category: product.category || 'dresses',
+      category: product.category || 'suits',
       images: product.images?.length ? product.images : [''],
       sizes: product.sizes || [],
       colors: product.colors || [],
@@ -106,7 +106,7 @@ export default function AdminProductsPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-display font-bold text-espresso">Products</h1>
-          <p className="text-luxury-500 mt-1">Manage your boutique inventory.</p>
+           <p className="text-luxury-500 mt-1">Manage your inventory.</p>
         </div>
         <button onClick={openCreate} className="btn-primary flex items-center gap-2">
           <HiOutlinePlus className="w-4 h-4" />

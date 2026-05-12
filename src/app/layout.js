@@ -3,9 +3,9 @@ import './globals.css';
 import Providers from './providers';
 
 export const metadata = {
-  title: 'Boutique — Luxury Fashion & Accessories',
-  description: 'Discover curated luxury fashion, accessories, jewelry, and more at Boutique. Elevate your style with our exclusive collections.',
-  keywords: 'fashion, boutique, luxury, clothing, accessories, jewelry',
+  title: 'Zara Man 247 — Luxury Menswear & Accessories',
+  description: 'Discover curated luxury menswear, suits, watches, shoes and accessories at Zara Man 247. Elevate your style with our exclusive gentlemen collections.',
+  keywords: 'menswear, zara man 247, luxury, suits, watches, shoes, accessories, gentlemen',
 };
 
 export default async function RootLayout({ children }) {

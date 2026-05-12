@@ -22,7 +22,7 @@ export default function AdminSidebar() {
     <aside className="w-64 bg-espresso min-h-screen flex flex-col">
       <div className="p-6 border-b border-luxury-700">
         <Link href="/" className="font-display text-xl font-bold text-cream tracking-wider">
-          BOUTIQUE
+          ZARA MAN 247
         </Link>
         <p className="text-gold-500 text-xs tracking-wider uppercase mt-1">Admin Panel</p>
       </div>

@@ -11,7 +11,7 @@ export async function uploadImage(file) {
     const buffer = Buffer.from(await file.arrayBuffer());
     const result = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
-        { folder: 'boutique', resource_type: 'image' },
+        { folder: 'zaraman247', resource_type: 'image' },
         (error, result) => {
           if (error) reject(error);
           else resolve(result);

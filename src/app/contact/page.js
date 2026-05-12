@@ -7,7 +7,7 @@ import Footer from '@/components/layout/Footer';
 import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker, HiOutlineClock, HiOutlineCheck } from 'react-icons/hi';
 
 const contactInfo = [
-  { icon: HiOutlineMail, label: 'Email', value: 'hello@boutique.com', href: 'mailto:hello@boutique.com' },
+  { icon: HiOutlineMail, label: 'Email', value: 'hello@zaraman247.com', href: 'mailto:hello@zaraman247.com' },
   { icon: HiOutlinePhone, label: 'Phone', value: '+1 (555) 123-4567', href: 'tel:+15551234567' },
   { icon: HiOutlineLocationMarker, label: 'Address', value: '123 Luxury Lane, New York, NY 10001', href: '#' },
   { icon: HiOutlineClock, label: 'Hours', value: 'Mon-Sat: 10AM - 8PM | Sun: 12PM - 6PM' },
@@ -37,11 +37,12 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      <main>
-        <section className="relative pt-32 pb-20 bg-espresso overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&q=80" alt="Contact" className="w-full h-full object-cover" />
+      <main className="pt-20">
+        <section className="relative py-32 bg-espresso overflow-hidden">
+          <div className="absolute inset-0 opacity-30">
+            <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1920&q=80" alt="Zara Man 247 store" className="w-full h-full object-cover" />
           </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-espresso/80 via-espresso/60 to-espresso" />
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
               <span className="text-gold-500 tracking-[0.3em] uppercase text-sm">Get in Touch</span>
@@ -147,9 +148,9 @@ export default function ContactPage() {
                 className="space-y-8"
               >
                 <h2 className="text-3xl font-display font-bold text-espresso mb-8">Visit Our Boutique</h2>
-                <div className="aspect-[4/3] overflow-hidden mb-8">
+                <div className="aspect-[4/3] overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&q=80"
+                    src="https://images.unsplash.com/photo-1553034545-4d879681c5d1?w=800&q=80"
                     alt="Our boutique"
                     className="w-full h-full object-cover"
                   />

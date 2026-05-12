@@ -10,12 +10,12 @@ export function CartProvider({ children }) {
   const [cartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('boutique-cart');
+    const saved = localStorage.getItem('zaraman247-cart');
     if (saved) setCart(JSON.parse(saved));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('boutique-cart', JSON.stringify(cart));
+    localStorage.setItem('zaraman247-cart', JSON.stringify(cart));
   }, [cart]);
 
   const addToCart = useCallback((product, quantity = 1, size = '', color = '') => {

@@ -9,7 +9,7 @@ const ProductSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ['dresses', 'tops', 'bottoms', 'outerwear', 'accessories', 'jewelry', 'bags', 'shoes', 'new-arrivals'],
+      enum: ['suits', 'shirts', 'pants', 'outerwear', 'shoes', 'watches', 'accessories', 'bags', 'new-arrivals'],
     },
     subcategory: { type: String, default: '' },
     images: [{ type: String }],
