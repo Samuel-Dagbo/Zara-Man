@@ -184,12 +184,13 @@ export default function AdminProductsPage() {
         {showModal && (
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowModal(false)} className="fixed inset-0 bg-black/50 z-50" />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-2xl w-full bg-cream z-50 overflow-y-auto max-h-[90vh]"
-            >
+            <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="w-[calc(100%-2rem)] md:max-w-2xl bg-cream overflow-y-auto max-h-[90vh] pointer-events-auto"
+              >
               <div className="p-8">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="font-display text-2xl font-bold text-espresso">
@@ -281,6 +282,7 @@ export default function AdminProductsPage() {
                 </form>
               </div>
             </motion.div>
+            </div>
           </>
         )}
       </AnimatePresence>

@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import { connectDB } from './mongodb';
 import User from './models/User';
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -47,6 +47,8 @@ const handler = NextAuth({
   pages: { signIn: '/auth/signin', error: '/auth/signin' },
   session: { strategy: 'jwt' },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

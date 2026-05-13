@@ -207,12 +207,13 @@ export default function ShopPage() {
               onClick={() => setSelectedProduct(null)}
               className="fixed inset-0 bg-black/60 z-50"
             />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-4xl w-full bg-cream z-50 overflow-y-auto max-h-[90vh]"
-            >
+            <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="w-[calc(100%-2rem)] md:max-w-4xl bg-cream overflow-y-auto max-h-[90vh] pointer-events-auto"
+              >
               <button
                 onClick={() => setSelectedProduct(null)}
                 className="absolute top-4 right-4 p-2 bg-white shadow-md hover:text-gold-500 z-10"
@@ -319,6 +320,7 @@ export default function ShopPage() {
                 </div>
               </div>
             </motion.div>
+            </div>
           </>
         )}
       </AnimatePresence>

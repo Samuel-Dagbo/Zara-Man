@@ -1,9 +1,10 @@
 import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import UserSidebar from '@/components/dashboard/UserSidebar';
 
 export default async function UserDashboardLayout({ children }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) redirect('/auth/signin');
   if (session.user.role !== 'user') redirect('/dashboard/admin');
 
