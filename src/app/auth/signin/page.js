@@ -39,7 +39,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-cream via-cream to-luxury-50 pt-20">
+    <div className="min-h-screen flex bg-gradient-to-br from-cream via-cream to-luxury-50 pt-20 lg:pt-0">
       <div className="hidden lg:block lg:w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-espresso via-espresso/95 to-espresso/90 z-10" />
         <img
