@@ -32,7 +32,7 @@ export default function SignInPage() {
         if (session?.user?.role === 'admin') {
           router.push('/dashboard/admin');
         } else {
-          router.push('/dashboard/user');
+          router.push('/shop');
         }
         router.refresh();
       }

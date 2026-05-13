@@ -14,11 +14,11 @@ export async function GET(request) {
     const id = searchParams.get('id');
 
     if (id) {
-      const user = await User.findById(id).select('-password');
+      const user = await User.findById(id).select('-password').lean();
       return NextResponse.json(user);
     }
 
-    const users = await User.find().select('-password').sort({ createdAt: -1 });
+    const users = await User.find().select('-password').sort({ createdAt: -1 }).lean();
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

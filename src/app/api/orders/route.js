@@ -19,7 +19,8 @@ export async function GET(request) {
 
     const orders = await Order.find(query)
       .populate('items.product')
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
     return NextResponse.json(orders);
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

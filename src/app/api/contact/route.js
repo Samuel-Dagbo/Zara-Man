@@ -16,7 +16,7 @@ export async function POST(request) {
 export async function GET() {
   try {
     await connectDB();
-    const messages = await Contact.find().sort({ createdAt: -1 });
+    const messages = await Contact.find().sort({ createdAt: -1 }).lean();
     return NextResponse.json(messages);
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

@@ -13,7 +13,7 @@ export async function POST(request) {
 
     await connectDB();
 
-    const existing = await User.findOne({ email });
+    const existing = await User.findOne({ email }).lean();
     if (existing) {
       return NextResponse.json({ error: 'Email already registered' }, { status: 400 });
     }

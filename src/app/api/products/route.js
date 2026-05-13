@@ -20,7 +20,7 @@ export async function GET(request) {
       default: sortOption = { createdAt: -1 };
     }
 
-    const products = await Product.find(query).sort(sortOption);
+    const products = await Product.find(query).sort(sortOption).lean();
     return NextResponse.json(products);
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
