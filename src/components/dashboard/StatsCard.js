@@ -9,6 +9,8 @@ export default function StatsCard({ title, value, icon: Icon, color = 'gold', su
     green: 'bg-green-500/10 text-green-600',
     purple: 'bg-purple-500/10 text-purple-600',
     red: 'bg-red-500/10 text-red-600',
+    yellow: 'bg-yellow-500/10 text-yellow-600',
+    wine: 'bg-red-800/10 text-red-800',
   };
 
   return (

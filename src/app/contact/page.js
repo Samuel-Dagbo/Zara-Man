@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker, HiOutlineClock, HiOutlineCheck } from 'react-icons/hi';
@@ -16,9 +17,11 @@ const contactInfo = [
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSending(true);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -28,9 +31,14 @@ export default function ContactPage() {
       if (res.ok) {
         setSubmitted(true);
         setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+        toast.success('Message sent successfully!');
+      } else {
+        toast.error('Failed to send message. Please try again.');
       }
     } catch (err) {
-      console.error(err);
+      toast.error('Something went wrong. Please try again.');
+    } finally {
+      setSending(false);
     }
   };
 
@@ -134,8 +142,8 @@ export default function ContactPage() {
                         placeholder="Tell us more about your inquiry..."
                       />
                     </div>
-                    <button type="submit" className="btn-primary w-full">
-                      Send Message
+                    <button type="submit" disabled={sending} className="btn-primary w-full disabled:opacity-50">
+                      {sending ? 'Sending...' : 'Send Message'}
                     </button>
                   </form>
                 )}

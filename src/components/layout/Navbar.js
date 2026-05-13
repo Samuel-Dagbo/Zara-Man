@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useCart } from '@/context/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineShoppingBag, HiOutlineUser, HiOutlineMenu, HiOutlineX, HiOutlineSearch } from 'react-icons/hi';
+import { HiOutlineShoppingBag, HiOutlineUser, HiOutlineMenu, HiOutlineX, HiOutlineSearch, HiOutlineLogout, HiOutlineTemplate } from 'react-icons/hi';
 import { formatPrice } from '@/lib/utils';
 
 const navLinks = [
@@ -20,6 +20,10 @@ export default function Navbar() {
   const { cart, cartTotal, cartCount, cartOpen, setCartOpen, removeFromCart, updateQuantity } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+
+  const dashboardHref = session
+    ? `/dashboard/${session.user.role === 'admin' ? 'admin' : 'user'}`
+    : '/auth/signin';
 
   return (
     <>
@@ -50,6 +54,7 @@ export default function Navbar() {
               <button
                 onClick={() => setShowSearch(!showSearch)}
                 className="p-2 text-espresso hover:text-gold-500 transition-colors"
+                aria-label="Search"
               >
                 <HiOutlineSearch className="w-5 h-5" />
               </button>
@@ -57,6 +62,7 @@ export default function Navbar() {
               <button
                 onClick={() => setCartOpen(!cartOpen)}
                 className="relative p-2 text-espresso hover:text-gold-500 transition-colors"
+                aria-label="Cart"
               >
                 <HiOutlineShoppingBag className="w-5 h-5" />
                 {cartCount > 0 && (
@@ -67,12 +73,30 @@ export default function Navbar() {
               </button>
 
               {session ? (
-                <Link
-                  href={`/dashboard/${session.user.role === 'admin' ? 'admin' : 'user'}`}
-                  className="p-2 text-espresso hover:text-gold-500 transition-colors"
-                >
-                  <HiOutlineUser className="w-5 h-5" />
-                </Link>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={dashboardHref}
+                    className="hidden lg:flex items-center gap-2 px-4 py-2 text-xs tracking-[0.2em] uppercase font-medium bg-espresso text-cream hover:bg-gold-500 hover:text-espresso transition-all duration-300"
+                  >
+                    <HiOutlineTemplate className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                  <Link
+                    href={dashboardHref}
+                    className="lg:hidden p-2 text-espresso hover:text-gold-500 transition-colors"
+                    aria-label="Dashboard"
+                  >
+                    <HiOutlineUser className="w-5 h-5" />
+                  </Link>
+                  <button
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    className="hidden lg:flex items-center gap-2 px-4 py-2 text-xs tracking-[0.2em] uppercase font-medium border border-espresso/30 text-espresso/70 hover:border-red-500 hover:text-red-500 transition-all duration-300"
+                    aria-label="Sign out"
+                  >
+                    <HiOutlineLogout className="w-4 h-4" />
+                    Sign Out
+                  </button>
+                </div>
               ) : (
                 <Link
                   href="/auth/signin"
@@ -85,6 +109,7 @@ export default function Navbar() {
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="md:hidden p-2 text-espresso"
+                aria-label="Menu"
               >
                 {mobileOpen ? <HiOutlineX className="w-6 h-6" /> : <HiOutlineMenu className="w-6 h-6" />}
               </button>
@@ -133,6 +158,7 @@ export default function Navbar() {
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="absolute top-6 right-6 text-cream/80 hover:text-cream"
+                  aria-label="Close menu"
                 >
                   <HiOutlineX className="w-8 h-8" />
                 </button>
@@ -153,12 +179,44 @@ export default function Navbar() {
                       </Link>
                     </motion.div>
                   ))}
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    {!session && (
+                  {session && (
+                    <>
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        <Link
+                          href={dashboardHref}
+                          onClick={() => setMobileOpen(false)}
+                          className="block mt-8 border-2 border-gold-500 text-gold-500 px-10 py-4 tracking-[0.2em] uppercase text-sm font-medium hover:bg-gold-500 hover:text-espresso transition-all duration-300"
+                        >
+                          Dashboard
+                        </Link>
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                      >
+                        <button
+                          onClick={() => {
+                            setMobileOpen(false);
+                            signOut({ callbackUrl: '/' });
+                          }}
+                          className="block mt-4 border-2 border-cream/30 text-cream/70 px-10 py-4 tracking-[0.2em] uppercase text-sm font-medium hover:border-red-400 hover:text-red-400 transition-all duration-300 w-full"
+                        >
+                          Sign Out
+                        </button>
+                      </motion.div>
+                    </>
+                  )}
+                  {!session && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                    >
                       <Link
                         href="/auth/signin"
                         onClick={() => setMobileOpen(false)}
@@ -166,8 +224,23 @@ export default function Navbar() {
                       >
                         Sign In
                       </Link>
-                    )}
-                  </motion.div>
+                    </motion.div>
+                  )}
+                  {!session && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.55 }}
+                    >
+                      <Link
+                        href="/auth/signup"
+                        onClick={() => setMobileOpen(false)}
+                        className="block mt-4 text-cream/50 hover:text-cream text-sm tracking-wider uppercase transition-colors"
+                      >
+                        Create Account
+                      </Link>
+                    </motion.div>
+                  )}
                 </nav>
               </div>
             </motion.div>
@@ -198,7 +271,7 @@ export default function Navbar() {
                     <h2 className="font-display text-2xl font-semibold">Shopping Cart</h2>
                     <p className="text-sm text-luxury-500 mt-1">{cartCount} item{cartCount !== 1 ? 's' : ''}</p>
                   </div>
-                  <button onClick={() => setCartOpen(false)} className="p-2 hover:text-gold-500 transition-colors">
+                  <button onClick={() => setCartOpen(false)} className="p-2 hover:text-gold-500 transition-colors" aria-label="Close cart">
                     <HiOutlineX className="w-6 h-6" />
                   </button>
                 </div>
@@ -241,11 +314,13 @@ export default function Navbar() {
                               <button
                                 onClick={() => updateQuantity(index, item.quantity - 1)}
                                 className="w-7 h-7 flex items-center justify-center text-sm hover:bg-luxury-100 transition-colors"
+                                aria-label="Decrease quantity"
                               >−</button>
                               <span className="text-sm w-8 text-center font-medium">{item.quantity}</span>
                               <button
                                 onClick={() => updateQuantity(index, item.quantity + 1)}
                                 className="w-7 h-7 flex items-center justify-center text-sm hover:bg-luxury-100 transition-colors"
+                                aria-label="Increase quantity"
                               >+</button>
                             </div>
                           </div>
@@ -253,6 +328,7 @@ export default function Navbar() {
                         <button
                           onClick={() => removeFromCart(index)}
                           className="text-luxury-400 hover:text-red-500 text-xs uppercase tracking-wider transition-colors self-start"
+                          aria-label="Remove item"
                         >
                           Remove
                         </button>
@@ -269,11 +345,11 @@ export default function Navbar() {
                     </div>
                     <p className="text-xs text-luxury-500">Shipping & taxes calculated at checkout</p>
                     <Link
-                      href="/checkout"
+                      href={session ? '/checkout' : '/auth/signin'}
                       onClick={() => setCartOpen(false)}
                       className="block w-full bg-espresso text-cream text-center py-4 tracking-[0.2em] uppercase text-sm font-medium hover:bg-gold-500 hover:text-espresso transition-all duration-300"
                     >
-                      Proceed to Checkout
+                      {session ? 'Proceed to Checkout' : 'Sign in to Checkout'}
                     </Link>
                   </div>
                 )}

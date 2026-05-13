@@ -6,6 +6,8 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useCart } from '@/context/CartContext';
 import { categories, formatPrice, truncate } from '@/lib/utils';
+import Skeleton from '@/components/ui/Skeleton';
+import EmptyState from '@/components/ui/EmptyState';
 import { HiOutlineAdjustments, HiOutlineX, HiOutlineStar, HiOutlineShoppingBag, HiOutlineSearch } from 'react-icons/hi';
 
 export default function ShopPage() {
@@ -108,22 +110,22 @@ export default function ShopPage() {
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {[...Array(8)].map((_, i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="aspect-[3/4] bg-luxury-100" />
+                  <div key={i}>
+                    <Skeleton className="aspect-[3/4]" />
                     <div className="mt-4 space-y-2">
-                      <div className="h-4 bg-luxury-100 w-3/4" />
-                      <div className="h-3 bg-luxury-100 w-1/2" />
-                      <div className="h-4 bg-luxury-100 w-1/4" />
+                      <Skeleton className="h-4 w-3/4" />
+                      <Skeleton className="h-3 w-1/2" />
+                      <Skeleton className="h-4 w-1/4" />
                     </div>
                   </div>
                 ))}
               </div>
             ) : filteredProducts.length === 0 ? (
-              <div className="text-center py-20">
-                <HiOutlineShoppingBag className="w-20 h-20 text-luxury-300 mx-auto mb-4" />
-                <h3 className="font-display text-2xl text-espresso mb-2">No products found</h3>
-                <p className="text-luxury-500">Try adjusting your filters or search query.</p>
-              </div>
+              <EmptyState
+                icon={HiOutlineShoppingBag}
+                title="No products found"
+                description="Try adjusting your filters or search query."
+              />
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {filteredProducts.map((product, index) => (
