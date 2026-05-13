@@ -30,11 +30,10 @@ export default function SignInPage() {
       } else {
         const session = await getSession();
         if (session?.user?.role === 'admin') {
-          router.push('/dashboard/admin');
+          router.replace('/dashboard/admin');
         } else {
-          router.push('/shop');
+          router.replace('/shop');
         }
-        router.refresh();
       }
     } catch (err) {
       setError('Something went wrong');
