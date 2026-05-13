@@ -18,12 +18,18 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error('Email and password are required');
+        }
         await connectDB();
-        const user = await User.findOne({ email: credentials.email }).lean();
-        if (!user) return null;
+        const user = await User.findOne({ email: credentials.email.toLowerCase().trim() }).lean();
+        if (!user) {
+          throw new Error('Invalid email or password');
+        }
         const passwordMatch = await bcrypt.compare(credentials.password, user.password);
-        if (!passwordMatch) return null;
+        if (!passwordMatch) {
+          throw new Error('Invalid email or password');
+        }
         return {
           id: user._id.toString(),
           email: user.email,
@@ -35,18 +41,39 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) { token.id = user.id; token.role = user.role; }
+    async jwt({ token, user, trigger, session }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      if (trigger === 'update' && session?.role) {
+        token.role = session.role;
+      }
       return token;
     },
     async session({ session, token }) {
-      if (token) { session.user.id = token.id; session.user.role = token.role; }
+      if (token) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+      }
       return session;
     },
   },
   pages: { signIn: '/auth/signin', error: '/auth/signin' },
-  session: { strategy: 'jwt' },
+  session: { strategy: 'jwt', maxAge: 30 * 24 * 60 * 60 },
   secret: process.env.NEXTAUTH_SECRET,
+  cookies: {
+    sessionToken: {
+      name: process.env.NODE_ENV === 'production' ? '__Secure-nextauth.session-token' : 'nextauth.session-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 30 * 24 * 60 * 60,
+      },
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

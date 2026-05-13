@@ -73,7 +73,10 @@ export default function Navbar() {
               </button>
 
               {session ? (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
+                  <span className="hidden lg:inline text-sm text-luxury-500">
+                    Hi, <span className="text-espresso font-medium">{session.user.name?.split(' ')[0] || 'User'}</span>
+                  </span>
                   <Link
                     href={dashboardHref}
                     className="hidden lg:flex items-center gap-2 px-4 py-2 text-xs tracking-[0.2em] uppercase font-medium bg-espresso text-cream hover:bg-gold-500 hover:text-espresso transition-all duration-300"
@@ -184,12 +187,19 @@ export default function Navbar() {
                       <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <p className="text-cream/60 text-sm tracking-wider">Welcome, {session.user.name?.split(' ')[0] || 'User'}</p>
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
                       >
                         <Link
                           href={dashboardHref}
                           onClick={() => setMobileOpen(false)}
-                          className="block mt-8 border-2 border-gold-500 text-gold-500 px-10 py-4 tracking-[0.2em] uppercase text-sm font-medium hover:bg-gold-500 hover:text-espresso transition-all duration-300"
+                          className="block mt-4 border-2 border-gold-500 text-gold-500 px-10 py-4 tracking-[0.2em] uppercase text-sm font-medium hover:bg-gold-500 hover:text-espresso transition-all duration-300"
                         >
                           Dashboard
                         </Link>

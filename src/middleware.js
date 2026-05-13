@@ -6,7 +6,15 @@ export async function middleware(req) {
   const path = req.nextUrl.pathname;
 
   if (!token) {
-    return NextResponse.redirect(new URL('/auth/signin', req.url));
+    if (path.startsWith('/dashboard')) {
+      return NextResponse.redirect(new URL('/auth/signin', req.url));
+    }
+    return NextResponse.next();
+  }
+
+  if (path.startsWith('/auth/signin') || path.startsWith('/auth/signup')) {
+    const dashboardUrl = token.role === 'admin' ? '/dashboard/admin' : '/shop';
+    return NextResponse.redirect(new URL(dashboardUrl, req.url));
   }
 
   if (path.startsWith('/dashboard/admin') && token.role !== 'admin') {
@@ -21,5 +29,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: ['/dashboard/:path*', '/auth/:path*'],
 };

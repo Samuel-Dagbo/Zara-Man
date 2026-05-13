@@ -4,8 +4,16 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { HiOutlineMail, HiOutlineLockClosed, HiOutlineUser } from 'react-icons/hi';
+import { HiOutlineMail, HiOutlineLockClosed, HiOutlineUser, HiCheckCircle, HiXCircle } from 'react-icons/hi';
 import toast from 'react-hot-toast';
+
+const passwordRequirements = [
+  { key: 'length', label: 'At least 8 characters', test: (p) => p.length >= 8 },
+  { key: 'upper', label: 'One uppercase letter', test: (p) => /[A-Z]/.test(p) },
+  { key: 'lower', label: 'One lowercase letter', test: (p) => /[a-z]/.test(p) },
+  { key: 'number', label: 'One number', test: (p) => /[0-9]/.test(p) },
+  { key: 'special', label: 'One special character', test: (p) => /[^A-Za-z0-9]/.test(p) },
+];
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -20,6 +28,13 @@ export default function SignUpPage() {
 
     if (form.password !== form.confirmPassword) {
       setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    const unmetRequirements = passwordRequirements.filter((req) => !req.test(form.password));
+    if (unmetRequirements.length > 0) {
+      setError(`Password must contain: ${unmetRequirements.map((r) => r.label).join(', ')}`);
       setLoading(false);
       return;
     }
@@ -122,13 +137,28 @@ export default function SignUpPage() {
                 <input
                   type="password"
                   required
-                  minLength={6}
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   className="input-field pl-12"
-                  placeholder="At least 6 characters"
+                  placeholder="Create a strong password"
                 />
               </div>
+              {form.password && (
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {passwordRequirements.map((req) => (
+                    <div key={req.key} className="flex items-center gap-2 text-xs">
+                      {req.test(form.password) ? (
+                        <HiCheckCircle className="w-4 h-4 text-green-500" />
+                      ) : (
+                        <HiXCircle className="w-4 h-4 text-luxury-400" />
+                      )}
+                      <span className={req.test(form.password) ? 'text-green-600' : 'text-luxury-400'}>
+                        {req.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div>

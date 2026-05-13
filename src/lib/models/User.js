@@ -16,6 +16,8 @@ const UserSchema = new mongoose.Schema(
       zip: { type: String, default: '' },
     },
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+    resetPasswordToken: { type: String, default: null },
+    resetPasswordExpires: { type: Date, default: null },
   },
   { timestamps: true }
 );

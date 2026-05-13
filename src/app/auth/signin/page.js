@@ -9,7 +9,7 @@ import { HiOutlineMail, HiOutlineLockClosed } from 'react-icons/hi';
 
 export default function SignInPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ email: '', password: '', rememberMe: false });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +25,7 @@ export default function SignInPage() {
         redirect: false,
       });
 
-      if (result.error) {
+      if (result?.error) {
         setError('Invalid email or password');
       } else {
         const session = await getSession();
@@ -106,6 +106,21 @@ export default function SignInPage() {
                   placeholder="Enter your password"
                 />
               </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={form.rememberMe}
+                  onChange={(e) => setForm({ ...form, rememberMe: e.target.checked })}
+                  className="w-4 h-4 accent-espresso"
+                />
+                <span className="text-sm text-luxury-500">Remember me (30 days)</span>
+              </label>
+              <Link href="/auth/forgot-password" className="text-sm text-espresso hover:text-gold-500">
+                Forgot password?
+              </Link>
             </div>
 
             <button
