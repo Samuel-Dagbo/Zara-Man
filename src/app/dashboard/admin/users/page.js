@@ -80,12 +80,12 @@ export default function AdminUsersPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-espresso">User Management</h1>
-        <p className="text-luxury-500 mt-1">View and manage registered users.</p>
+      <div className="mb-6 lg:mb-8">
+        <h1 className="text-2xl lg:text-3xl font-display font-bold text-espresso">User Management</h1>
+        <p className="text-sm lg:text-base text-luxury-500 mt-1">View and manage registered users.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
         {loading ? (
           Array.from({ length: 3 }).map((_, i) => <StatsCardSkeleton key={i} />)
         ) : (
@@ -97,7 +97,7 @@ export default function AdminUsersPage() {
         )}
       </div>
 
-      <div className="bg-white border border-luxury-100">
+      <div className="premium-card overflow-hidden">
         <div className="overflow-x-auto">
           {loading ? (
             <TableSkeleton rows={8} cols={5} />
@@ -108,52 +108,50 @@ export default function AdminUsersPage() {
               description="User accounts will appear here once people register."
             />
           ) : (
-            <table className="w-full">
+            <table className="premium-table">
               <thead>
-                <tr className="bg-luxury-50">
-                  <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">User</th>
-                  <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Email</th>
-                  <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Role</th>
-                  <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Joined</th>
-                  <th className="text-right p-4 text-xs tracking-wider uppercase text-luxury-500">Actions</th>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Joined</th>
+                  <th className="text-right">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr key={user._id} className="border-t border-luxury-50 hover:bg-luxury-50/50 transition-colors">
-                    <td className="p-4">
+                  <tr key={user._id}>
+                    <td>
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gold-500/10 rounded-full flex items-center justify-center">
-                          <HiOutlineUser className="w-5 h-5 text-gold-500" />
+                        <div className="w-10 h-10 bg-gradient-to-br from-gold-500/20 to-gold-500/5 rounded-full flex items-center justify-center">
+                          <HiOutlineUser className="w-5 h-5 text-gold-600" />
                         </div>
                         <p className="text-sm font-medium text-espresso">{user.name}</p>
                       </div>
                     </td>
-                    <td className="p-4 text-sm text-luxury-600">{user.email}</td>
-                    <td className="p-4">
-                      <span className={`inline-block px-3 py-1 text-xs tracking-wider uppercase ${
-                        user.role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
-                      }`}>
+                    <td className="text-sm text-luxury-600">{user.email}</td>
+                    <td>
+                      <span className={`badge ${user.role === 'admin' ? 'badge-purple' : 'badge-blue'}`}>
                         {user.role}
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-luxury-500">
+                    <td className="text-sm text-luxury-500">
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="p-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="text-right">
+                      <div className="flex items-center justify-end gap-1 sm:gap-2">
                         <button
                           onClick={() => toggleRole(user._id, user.role)}
-                          className="px-3 py-1.5 text-xs tracking-wider uppercase border border-luxury-200 text-luxury-600 hover:border-espresso hover:text-espresso transition-all"
+                          className="px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs tracking-wider uppercase rounded-lg border border-luxury-200 text-luxury-600 hover:border-espresso hover:text-espresso hover:bg-luxury-50 transition-all font-medium"
                         >
                           Make {user.role === 'admin' ? 'User' : 'Admin'}
                         </button>
                         <button
                           onClick={() => handleDelete(user._id)}
-                          className="p-2 text-luxury-500 hover:text-red-600 hover:bg-red-50 transition-all"
+                          className="p-1.5 sm:p-2 rounded-lg text-luxury-500 hover:text-red-600 hover:bg-red-50 transition-all"
                           aria-label="Delete user"
                         >
-                          <HiOutlineTrash className="w-4 h-4" />
+                          <HiOutlineTrash className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         </button>
                       </div>
                     </td>

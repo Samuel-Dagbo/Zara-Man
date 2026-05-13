@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Order from '@/lib/models/Order';
+import Product from '@/lib/models/MenuItem';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 

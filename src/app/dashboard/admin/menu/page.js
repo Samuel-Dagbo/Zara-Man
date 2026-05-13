@@ -150,18 +150,18 @@ export default function AdminProductsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-6 lg:mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-espresso">Products</h1>
-          <p className="text-luxury-500 mt-1">Manage your inventory.</p>
+          <h1 className="text-2xl lg:text-3xl font-display font-bold text-espresso">Products</h1>
+          <p className="text-sm lg:text-base text-luxury-500 mt-1">Manage your inventory.</p>
         </div>
-        <button onClick={openCreate} className="btn-primary flex items-center gap-2">
+        <button onClick={openCreate} className="btn-primary flex items-center gap-2 shadow-lg shadow-espresso/20 text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 w-full sm:w-auto justify-center">
           <HiOutlinePlus className="w-4 h-4" />
           Add Product
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
         {loading ? (
           Array.from({ length: 5 }).map((_, i) => <StatsCardSkeleton key={i} />)
         ) : (
@@ -175,7 +175,7 @@ export default function AdminProductsPage() {
         )}
       </div>
 
-      <div className="bg-white border border-luxury-100">
+      <div className="premium-card overflow-hidden">
         <div className="overflow-x-auto">
           {loading ? (
             <TableSkeleton rows={8} cols={6} />
@@ -188,23 +188,23 @@ export default function AdminProductsPage() {
               onAction={openCreate}
             />
           ) : (
-            <table className="w-full">
+            <table className="premium-table">
               <thead>
-                <tr className="bg-luxury-50">
-                  <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Product</th>
-                  <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Category</th>
-                  <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Price</th>
-                  <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Stock</th>
-                  <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Qty</th>
-                  <th className="text-right p-4 text-xs tracking-wider uppercase text-luxury-500">Actions</th>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Qty</th>
+                  <th className="text-right">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {products.map((product) => (
-                  <tr key={product._id} className="border-t border-luxury-50 hover:bg-luxury-50/50 transition-colors">
-                    <td className="p-4">
+                  <tr key={product._id}>
+                    <td>
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-14 bg-luxury-100 flex-shrink-0 overflow-hidden">
+                        <div className="w-12 h-14 bg-luxury-100 flex-shrink-0 overflow-hidden rounded-lg">
                           <img src={product.images?.[0] || ''} alt="" className="w-full h-full object-cover" />
                         </div>
                         <div className="min-w-0">
@@ -213,29 +213,29 @@ export default function AdminProductsPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="p-4 text-sm text-luxury-600 capitalize">{product.category}</td>
-                    <td className="p-4">
+                    <td className="text-sm text-luxury-600 capitalize">{product.category}</td>
+                    <td>
                       <p className="text-sm font-semibold">{formatPrice(product.price)}</p>
                       {product.comparePrice > 0 && (
                         <p className="text-xs text-luxury-400 line-through">{formatPrice(product.comparePrice)}</p>
                       )}
                     </td>
-                    <td className="p-4">
-                      <span className={`text-xs tracking-wider uppercase ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
+                    <td>
+                      <span className={`badge ${product.inStock ? 'badge-green' : 'badge-red'}`}>
                         {product.inStock ? 'In Stock' : 'Out'}
                       </span>
                     </td>
-                    <td className="p-4">
+                    <td>
                       <span className={`text-sm ${product.quantity <= 5 && product.inStock ? 'text-red-600 font-semibold' : 'text-luxury-600'}`}>
                         {product.quantity ?? '-'}
                       </span>
                     </td>
-                    <td className="p-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button onClick={() => openEdit(product)} className="p-2 text-luxury-500 hover:text-blue-600 hover:bg-blue-50 transition-all">
+                    <td className="text-right">
+                      <div className="flex items-center justify-end gap-1">
+                        <button onClick={() => openEdit(product)} className="p-2 rounded-lg text-luxury-500 hover:text-blue-600 hover:bg-blue-50 transition-all" title="Edit">
                           <HiOutlinePencil className="w-4 h-4" />
                         </button>
-                        <button onClick={() => handleDelete(product._id)} className="p-2 text-luxury-500 hover:text-red-600 hover:bg-red-50 transition-all">
+                        <button onClick={() => handleDelete(product._id)} className="p-2 rounded-lg text-luxury-500 hover:text-red-600 hover:bg-red-50 transition-all" title="Delete">
                           <HiOutlineTrash className="w-4 h-4" />
                         </button>
                       </div>
@@ -263,19 +263,19 @@ export default function AdminProductsPage() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="w-[calc(100%-2rem)] md:max-w-2xl bg-cream overflow-y-auto max-h-[90vh] pointer-events-auto"
+                className="w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:max-w-2xl bg-cream overflow-y-auto max-h-[90vh] pointer-events-auto rounded-xl"
               >
-                <div className="p-8">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="font-display text-2xl font-bold text-espresso">
+                <div className="p-4 sm:p-6 md:p-8">
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
+                    <h2 className="font-display text-xl sm:text-2xl font-bold text-espresso">
                       {editingProduct ? 'Edit Product' : 'New Product'}
                     </h2>
                     <button onClick={() => setShowModal(false)} className="p-2 hover:text-gold-500 transition-colors">
                       <HiOutlineX className="w-5 h-5" />
                     </button>
                   </div>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div className="sm:col-span-2">
                         <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Name</label>
                         <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="input-field" />
@@ -339,25 +339,25 @@ export default function AdminProductsPage() {
                         <input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={(e) => setForm({ ...form, rating: e.target.value })} className="input-field" />
                       </div>
                     </div>
-                    <div className="flex items-center gap-6">
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-6">
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} className="w-4 h-4 text-gold-500 focus:ring-gold-500" />
-                        <span className="text-sm text-espresso">In Stock</span>
+                        <span className="text-xs sm:text-sm text-espresso">In Stock</span>
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} className="w-4 h-4 text-gold-500 focus:ring-gold-500" />
-                        <span className="text-sm text-espresso">Featured</span>
+                        <span className="text-xs sm:text-sm text-espresso">Featured</span>
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" checked={form.onSale} onChange={(e) => setForm({ ...form, onSale: e.target.checked })} className="w-4 h-4 text-gold-500 focus:ring-gold-500" />
-                        <span className="text-sm text-espresso">On Sale</span>
+                        <span className="text-xs sm:text-sm text-espresso">On Sale</span>
                       </label>
                     </div>
-                    <div className="flex gap-4 pt-4">
-                      <button type="submit" disabled={submitting} className="btn-primary flex-1 disabled:opacity-50">
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-3 sm:pt-4">
+                      <button type="submit" disabled={submitting} className="btn-primary flex-1 disabled:opacity-50 text-center text-xs sm:text-sm">
                         {submitting ? 'Saving...' : editingProduct ? 'Update Product' : 'Create Product'}
                       </button>
-                      <button type="button" onClick={() => setShowModal(false)} className="btn-secondary flex-1">Cancel</button>
+                      <button type="button" onClick={() => setShowModal(false)} className="btn-secondary flex-1 text-center text-xs sm:text-sm">Cancel</button>
                     </div>
                   </form>
                 </div>

@@ -91,20 +91,20 @@ export default function UserProfilePage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-espresso">My Profile</h1>
-        <p className="text-luxury-500 mt-1">Manage your personal information and address.</p>
+      <div className="mb-6 lg:mb-8">
+        <h1 className="text-2xl lg:text-3xl font-display font-bold text-espresso">My Profile</h1>
+        <p className="text-sm lg:text-base text-luxury-500 mt-1">Manage your personal information and address.</p>
       </div>
 
       <motion.form
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         onSubmit={handleSubmit}
-        className="bg-white border border-luxury-100 p-8 space-y-8"
+        className="premium-card p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8"
       >
         <div>
-          <h2 className="font-display text-lg font-semibold text-espresso mb-4">Personal Information</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <h2 className="font-display text-base sm:text-lg font-semibold text-espresso mb-3 sm:mb-4">Personal Information</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Full Name</label>
               <div className="relative">
@@ -129,9 +129,9 @@ export default function UserProfilePage() {
           </div>
         </div>
 
-        <div className="border-t border-luxury-100 pt-8">
-          <h2 className="font-display text-lg font-semibold text-espresso mb-4">Shipping Address</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="border-t border-luxury-100 pt-6 sm:pt-8">
+          <h2 className="font-display text-base sm:text-lg font-semibold text-espresso mb-3 sm:mb-4">Shipping Address</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Full Name</label>
               <div className="relative">
@@ -161,11 +161,11 @@ export default function UserProfilePage() {
           </div>
         </div>
 
-        <div className="border-t border-luxury-100 pt-6 flex justify-end">
+        <div className="border-t border-luxury-100 pt-4 sm:pt-6 flex flex-col sm:flex-row justify-end">
           <button
             type="submit"
             disabled={saving}
-            className="bg-espresso text-cream px-10 py-4 tracking-wider uppercase text-sm font-medium hover:bg-gold-500 hover:text-espresso transition-all duration-300 disabled:opacity-50"
+            className="bg-espresso text-cream px-8 sm:px-10 py-3 sm:py-4 tracking-wider uppercase text-xs sm:text-sm font-medium rounded-lg hover:bg-gold-500 hover:text-espresso transition-all duration-300 disabled:opacity-50 shadow-lg shadow-espresso/20 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto"
           >
             {saving ? 'Saving...' : 'Save Changes'}
           </button>

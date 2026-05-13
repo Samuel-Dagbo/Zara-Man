@@ -34,13 +34,13 @@ export function TableSkeleton({ rows = 5, cols = 6 }) {
 
 export function StatsCardSkeleton() {
   return (
-    <div className="bg-white border border-luxury-100 p-6">
+    <div className="bg-white rounded-xl border border-luxury-100 p-6 shadow-sm">
       <div className="flex items-center justify-between">
         <div className="space-y-2 flex-1">
           <Skeleton className="h-3 w-20" />
           <Skeleton className="h-8 w-16" />
         </div>
-        <Skeleton className="h-10 w-10" />
+        <Skeleton className="h-10 w-10 rounded-xl" />
       </div>
     </div>
   );

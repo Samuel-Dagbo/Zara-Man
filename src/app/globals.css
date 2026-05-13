@@ -44,20 +44,60 @@ h1, h2, h3, h4, h5, h6 {
   .btn-primary {
     @apply bg-espresso text-cream px-8 py-3 rounded-none font-medium 
            tracking-wider uppercase text-sm transition-all duration-300
-           hover:bg-gold-500 hover:text-espresso;
+           hover:bg-gold-500 hover:text-espresso hover:shadow-lg hover:-translate-y-0.5;
   }
 
   .btn-secondary {
     @apply border-2 border-espresso text-espresso px-8 py-3 rounded-none 
            font-medium tracking-wider uppercase text-sm transition-all duration-300
-           hover:bg-espresso hover:text-cream;
+           hover:bg-espresso hover:text-cream hover:shadow-lg hover:-translate-y-0.5;
   }
 
   .btn-gold {
     @apply bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-3 
            rounded-none font-medium tracking-wider uppercase text-sm 
            transition-all duration-300 hover:from-gold-600 hover:to-gold-700
-           shadow-lg hover:shadow-xl;
+           shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-sm tracking-wider uppercase transition-all duration-200
+           hover:bg-luxury-100 text-luxury-600 hover:text-espresso;
+  }
+
+  .btn-soft {
+    @apply px-4 py-2 text-sm tracking-wider uppercase rounded-lg transition-all duration-200
+           bg-luxury-50 text-luxury-600 hover:bg-luxury-100 hover:text-espresso;
+  }
+
+  .premium-card {
+    @apply bg-white rounded-xl shadow-sm border border-luxury-100 
+           hover:shadow-md hover:border-luxury-200 transition-all duration-300;
+  }
+
+  .premium-card-dark {
+    @apply bg-espresso rounded-xl shadow-lg border border-luxury-700
+           hover:shadow-xl hover:border-gold-500/30 transition-all duration-300;
+  }
+
+  .premium-table {
+    @apply w-full;
+  }
+
+  .premium-table thead tr {
+    @apply bg-gradient-to-r from-luxury-50 to-luxury-100/50;
+  }
+
+  .premium-table th {
+    @apply text-left p-4 text-xs tracking-wider uppercase text-luxury-500 font-semibold;
+  }
+
+  .premium-table tbody tr {
+    @apply border-t border-luxury-100/50 transition-all duration-200 hover:bg-luxury-50/80;
+  }
+
+  .premium-table td {
+    @apply p-4;
   }
 
   .section-heading {
@@ -69,17 +109,54 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl rounded-xl;
   }
 
   .glass-card-dark {
-    @apply bg-espresso/60 backdrop-blur-md border border-white/10 shadow-xl;
+    @apply bg-espresso/60 backdrop-blur-md border border-white/10 shadow-xl rounded-xl;
   }
 
   .input-field {
-    @apply w-full px-4 py-3 border border-luxury-200 bg-white rounded-none
-           focus:ring-2 focus:ring-gold-500 focus:border-gold-500 
-           transition-all duration-200 outline-none text-espresso;
+    @apply w-full px-4 py-3 border border-luxury-200 bg-white rounded-lg
+           focus:ring-2 focus:ring-gold-500/30 focus:border-gold-500 
+           transition-all duration-200 outline-none text-espresso
+           placeholder:text-luxury-400;
+  }
+
+  .input-field-error {
+    @apply border-red-300 focus:ring-red-500/30 focus:border-red-500;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1 text-xs tracking-wider uppercase rounded-full font-medium;
+  }
+
+  .badge-gold {
+    @apply badge bg-gold-500/10 text-gold-700;
+  }
+
+  .badge-green {
+    @apply badge bg-emerald-50 text-emerald-700;
+  }
+
+  .badge-red {
+    @apply badge bg-red-50 text-red-700;
+  }
+
+  .badge-blue {
+    @apply badge bg-blue-50 text-blue-700;
+  }
+
+  .badge-purple {
+    @apply badge bg-purple-50 text-purple-700;
+  }
+
+  .badge-yellow {
+    @apply badge bg-amber-50 text-amber-700;
+  }
+
+  .badge-indigo {
+    @apply badge bg-indigo-50 text-indigo-700;
   }
 
   .text-gradient {
@@ -126,8 +203,16 @@ h1, h2, h3, h4, h5, h6 {
     background: linear-gradient(135deg, #2C1810 0%, #4D4030 50%, #2C1810 100%);
   }
 
+  .premium-gradient-gold {
+    background: linear-gradient(135deg, #C8A45C 0%, #B8860B 50%, #C8A45C 100%);
+  }
+
   .gold-divider {
     @apply h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent w-20 mx-auto;
+  }
+
+  .focus-ring-gold {
+    @apply focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2;
   }
 }
 

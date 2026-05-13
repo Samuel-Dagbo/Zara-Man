@@ -1,31 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { HiOutlineMail, HiOutlineLockClosed } from 'react-icons/hi';
+import { HiOutlineMail, HiOutlineLockClosed, HiOutlineEye, HiOutlineEyeOff, HiOutlineExclamationCircle } from 'react-icons/hi';
 
 export default function SignInPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const res = await fetch('/api/auth/session');
-        const session = await res.json();
-        if (session?.user) {
-          router.replace('/auth/callback');
-        }
-      } catch {}
-    };
-    checkSession();
-  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,44 +39,59 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-cream pt-20">
-      <div className="hidden lg:block lg:w-1/2 relative">
+    <div className="min-h-screen flex bg-gradient-to-br from-cream via-cream to-luxury-50 pt-20">
+      <div className="hidden lg:block lg:w-1/2 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-espresso via-espresso/95 to-espresso/90 z-10" />
         <img
           src="https://images.pexels.com/photos/5452268/pexels-photo-5452268.jpeg"
           alt="Men's fashion"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-espresso/80 to-transparent" />
-        <div className="absolute bottom-12 left-12 text-cream">
-          <h2 className="font-display text-4xl font-bold">Welcome Back</h2>
-          <p className="text-cream/70 mt-2">Continue your style journey with us.</p>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gold-500/10 via-transparent to-transparent z-20" />
+        <div className="absolute bottom-12 left-12 z-30">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="w-16 h-1 bg-gold-500 mb-6" />
+            <h2 className="font-display text-5xl font-bold text-cream leading-tight">Welcome Back</h2>
+            <p className="text-cream/60 mt-3 text-lg max-w-sm">Continue your style journey with Zara Man 247.</p>
+          </motion.div>
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md"
         >
-          <Link href="/" className="font-display text-3xl font-bold text-espresso tracking-wider block mb-12">
+          <Link href="/" className="font-display text-3xl font-bold text-espresso tracking-wider block mb-12 hover:text-gold-600 transition-colors">
             ZARA MAN 247
           </Link>
 
-          <h1 className="text-3xl font-display font-bold text-espresso">Sign In</h1>
-          <p className="text-luxury-500 mt-2">Access your account and manage your orders.</p>
+          <div className="mb-8">
+            <h1 className="text-4xl font-display font-bold text-espresso">Sign In</h1>
+            <p className="text-luxury-500 mt-2">Access your account and manage your orders.</p>
+          </div>
 
           {error && (
-            <div className="mt-6 p-4 bg-red-50 border border-red-200 text-red-600 text-sm">
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg flex items-center gap-3"
+            >
+              <HiOutlineExclamationCircle className="w-5 h-5 flex-shrink-0 text-red-500" />
               {error}
-            </div>
+            </motion.div>
           )}
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Email</label>
-              <div className="relative">
-                <HiOutlineMail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-luxury-400" />
+              <div className="relative group">
+                <HiOutlineMail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-luxury-400 group-focus-within:text-gold-500 transition-colors z-10" />
                 <input
                   type="email"
                   required
@@ -102,25 +105,32 @@ export default function SignInPage() {
 
             <div>
               <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Password</label>
-              <div className="relative">
-                <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-luxury-400" />
+              <div className="relative group">
+                <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-luxury-400 group-focus-within:text-gold-500 transition-colors z-10" />
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input-field pl-12"
+                  className="input-field pl-12 pr-12"
                   placeholder="Enter your password"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-luxury-400 hover:text-espresso transition-colors z-10"
+                >
+                  {showPassword ? <HiOutlineEyeOff className="w-5 h-5" /> : <HiOutlineEye className="w-5 h-5" />}
+                </button>
               </div>
             </div>
 
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 accent-espresso" />
-                <span className="text-sm text-luxury-500">Remember me (30 days)</span>
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <input type="checkbox" className="w-4 h-4 rounded border-luxury-300 text-gold-500 focus:ring-gold-500/30 transition-colors" />
+                <span className="text-sm text-luxury-500 group-hover:text-espresso transition-colors">Remember me</span>
               </label>
-              <Link href="/auth/forgot-password" className="text-sm text-espresso hover:text-gold-500">
+              <Link href="/auth/forgot-password" className="text-sm text-espresso hover:text-gold-600 transition-colors font-medium">
                 Forgot password?
               </Link>
             </div>
@@ -128,10 +138,19 @@ export default function SignInPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-espresso text-cream py-4 tracking-wider uppercase text-sm font-medium 
-                         hover:bg-gold-500 hover:text-espresso transition-all duration-300 disabled:opacity-50"
+              className="w-full bg-espresso text-cream py-4 tracking-wider uppercase text-sm font-medium rounded-lg
+                         hover:bg-gold-500 hover:text-espresso transition-all duration-300 disabled:opacity-50 
+                         shadow-lg shadow-espresso/20 hover:shadow-xl hover:shadow-gold-500/20 hover:-translate-y-0.5"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Signing in...
+                </span>
+              ) : 'Sign In'}
             </button>
 
             <div className="relative">
@@ -146,8 +165,9 @@ export default function SignInPage() {
             <button
               type="button"
               onClick={handleGoogleLogin}
-              className="w-full border-2 border-luxury-200 text-espresso py-4 tracking-wider uppercase text-sm 
-                         font-medium hover:border-espresso transition-all duration-300 flex items-center justify-center gap-3"
+              className="w-full border-2 border-luxury-200 text-espresso py-4 tracking-wider uppercase text-sm rounded-lg
+                         font-medium hover:border-espresso hover:bg-white transition-all duration-300 
+                         flex items-center justify-center gap-3 hover:shadow-lg"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
@@ -160,7 +180,7 @@ export default function SignInPage() {
 
             <p className="text-center text-sm text-luxury-500">
               Don&apos;t have an account?{' '}
-              <Link href="/auth/signup" className="text-espresso font-medium hover:text-gold-500 transition-colors">
+              <Link href="/auth/signup" className="text-espresso font-medium hover:text-gold-600 transition-colors">
                 Create one
               </Link>
             </p>

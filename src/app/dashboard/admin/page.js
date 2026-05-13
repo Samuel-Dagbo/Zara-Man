@@ -89,12 +89,12 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-espresso">Admin Dashboard</h1>
-        <p className="text-luxury-500 mt-1">Manage your boutique at a glance.</p>
+      <div className="mb-6 lg:mb-8">
+        <h1 className="text-2xl lg:text-3xl font-display font-bold text-espresso">Admin Dashboard</h1>
+        <p className="text-sm lg:text-base text-luxury-500 mt-1">Manage your boutique at a glance.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
         {loading ? (
           Array.from({ length: 6 }).map((_, i) => <StatsCardSkeleton key={i} />)
         ) : (
@@ -111,15 +111,15 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-6 lg:mb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white border border-luxury-100"
+          className="premium-card overflow-hidden"
         >
-          <div className="p-6 border-b border-luxury-100 flex items-center justify-between">
-            <h2 className="font-display text-xl font-semibold text-espresso">Recent Orders</h2>
-            <Link href="/dashboard/admin/orders" className="text-xs tracking-wider uppercase text-gold-500 hover:text-gold-600 flex items-center gap-1">
+          <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-luxury-100 flex items-center justify-between bg-gradient-to-r from-luxury-50/50 to-transparent">
+            <h2 className="font-display text-base sm:text-lg font-semibold text-espresso">Recent Orders</h2>
+            <Link href="/dashboard/admin/orders" className="text-xs tracking-wider uppercase text-gold-500 hover:text-gold-600 flex items-center gap-1 font-medium">
               View All <HiOutlineArrowRight className="w-3 h-3" />
             </Link>
           </div>
@@ -133,29 +133,31 @@ export default function AdminDashboard() {
                 description="Orders will appear here once customers start purchasing."
               />
             ) : (
-              <table className="w-full">
+              <table className="premium-table">
                 <thead>
-                  <tr className="bg-luxury-50">
-                    <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Order</th>
-                    <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Customer</th>
-                    <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Total</th>
-                    <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Status</th>
-                    <th className="text-left p-4 text-xs tracking-wider uppercase text-luxury-500">Payment</th>
+                  <tr>
+                    <th>Order</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Payment</th>
                   </tr>
                 </thead>
                 <tbody>
                   {recentOrders.map((order) => (
-                    <tr key={order._id} className="border-t border-luxury-50 hover:bg-luxury-50/50 transition-colors">
-                      <td className="p-4 text-sm font-medium text-espresso">#{order._id?.slice(-6).toUpperCase()}</td>
-                      <td className="p-4 text-sm text-luxury-600">{order.shippingAddress?.fullName || 'N/A'}</td>
-                      <td className="p-4 text-sm font-semibold">{formatPrice(order.totalAmount)}</td>
-                      <td className="p-4">
-                        <span className={`inline-block px-3 py-1 text-xs tracking-wider uppercase ${getStatusBadge(order.status)}`}>
+                    <tr key={order._id}>
+                      <td>
+                        <span className="text-sm font-medium text-espresso">#{order._id?.slice(-6).toUpperCase()}</span>
+                      </td>
+                      <td className="text-sm text-luxury-600">{order.shippingAddress?.fullName || 'N/A'}</td>
+                      <td className="text-sm font-semibold">{formatPrice(order.totalAmount)}</td>
+                      <td>
+                        <span className={`badge ${getStatusBadge(order.status)}`}>
                           {order.status}
                         </span>
                       </td>
-                      <td className="p-4">
-                        <span className={`inline-block px-3 py-1 text-xs tracking-wider uppercase ${order.paymentStatus === 'paid' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                      <td>
+                        <span className={`badge ${order.paymentStatus === 'paid' ? 'badge-green' : 'badge-yellow'}`}>
                           {order.paymentStatus}
                         </span>
                       </td>
@@ -171,11 +173,11 @@ export default function AdminDashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white border border-luxury-100"
+          className="premium-card overflow-hidden"
         >
-          <div className="p-6 border-b border-luxury-100 flex items-center justify-between">
-            <h2 className="font-display text-xl font-semibold text-espresso">Inventory Alerts</h2>
-            <Link href="/dashboard/admin/menu" className="text-xs tracking-wider uppercase text-gold-500 hover:text-gold-600 flex items-center gap-1">
+          <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-luxury-100 flex items-center justify-between bg-gradient-to-r from-luxury-50/50 to-transparent">
+            <h2 className="font-display text-base sm:text-lg font-semibold text-espresso">Inventory Alerts</h2>
+            <Link href="/dashboard/admin/menu" className="text-xs tracking-wider uppercase text-gold-500 hover:text-gold-600 flex items-center gap-1 font-medium">
               Manage <HiOutlineArrowRight className="w-3 h-3" />
             </Link>
           </div>
@@ -190,9 +192,9 @@ export default function AdminDashboard() {
           ) : (
             <div className="divide-y divide-luxury-100">
               {lowStockProducts.map((product) => (
-                <div key={product._id} className="p-4 flex items-center justify-between hover:bg-luxury-50/50 transition-colors">
+                <div key={product._id} className="p-4 flex items-center justify-between hover:bg-luxury-50/80 transition-colors">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-10 h-12 bg-luxury-100 flex-shrink-0 overflow-hidden">
+                    <div className="w-12 h-14 bg-luxury-100 flex-shrink-0 overflow-hidden rounded-lg">
                       {product.images?.[0] && (
                         <img src={product.images[0]} alt="" className="w-full h-full object-cover" />
                       )}
@@ -218,21 +220,21 @@ export default function AdminDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-gold-500/5 border border-gold-500/20 p-6"
+        className="premium-card bg-gradient-to-br from-gold-500/5 via-gold-500/[0.02] to-transparent border-gold-500/20 p-4 sm:p-6"
       >
-        <div className="flex items-center justify-between flex-wrap gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h3 className="font-display text-lg font-semibold text-espresso">Quick Actions</h3>
-            <p className="text-sm text-luxury-500 mt-1">Common tasks to keep your store running.</p>
+            <h3 className="font-display text-base sm:text-lg font-semibold text-espresso">Quick Actions</h3>
+            <p className="text-xs sm:text-sm text-luxury-500 mt-1">Common tasks to keep your store running.</p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/dashboard/admin/menu" className="px-6 py-3 bg-espresso text-cream text-sm tracking-wider uppercase font-medium hover:bg-gold-500 hover:text-espresso transition-all duration-300">
+          <div className="flex flex-wrap gap-2 sm:gap-3 w-full sm:w-auto">
+            <Link href="/dashboard/admin/menu" className="btn-primary text-xs px-4 sm:px-6 py-2.5 sm:py-3 flex-1 sm:flex-initial text-center">
               Add Product
             </Link>
-            <Link href="/dashboard/admin/orders" className="px-6 py-3 border border-espresso text-espresso text-sm tracking-wider uppercase font-medium hover:bg-espresso hover:text-cream transition-all duration-300">
+            <Link href="/dashboard/admin/orders" className="btn-secondary text-xs px-4 sm:px-6 py-2.5 sm:py-3 flex-1 sm:flex-initial text-center">
               View Orders
             </Link>
-            <Link href="/dashboard/admin/users" className="px-6 py-3 border border-espresso text-espresso text-sm tracking-wider uppercase font-medium hover:bg-espresso hover:text-cream transition-all duration-300">
+            <Link href="/dashboard/admin/users" className="btn-ghost border border-luxury-200 rounded-lg px-4 sm:px-6 py-2.5 sm:py-3 flex-1 sm:flex-initial text-center">
               Manage Users
             </Link>
           </div>
