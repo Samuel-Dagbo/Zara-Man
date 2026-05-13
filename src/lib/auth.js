@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import { connectDB } from './mongodb';
 import User from './models/User';
 
-const authOptions = {
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -19,7 +19,7 @@ const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Please enter your email and password');
+          throw new Error('Email and password are required');
         }
 
         await connectDB();
@@ -72,10 +72,8 @@ const authOptions = {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60,
   },
-  secret: process.env.NEXTAUTH_SECRET || 'fallback-secret-change-in-production',
 };
 
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
-export { authOptions };

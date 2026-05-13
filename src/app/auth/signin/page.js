@@ -1,21 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { HiOutlineMail, HiOutlineLockClosed } from 'react-icons/hi';
 
 export default function SignInPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/shop';
-  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const res = await fetch('/api/auth/session');
+        const session = await res.json();
+        if (session?.user) {
+          router.replace('/auth/callback');
+        }
+      } catch {}
+    };
+    checkSession();
+  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,12 +42,12 @@ export default function SignInPage() {
       setError('Invalid email or password');
       setLoading(false);
     } else {
-      router.push(callbackUrl);
+      window.location.href = '/auth/callback';
     }
   };
 
   const handleGoogleLogin = () => {
-    signIn('google', { callbackUrl: '/' });
+    signIn('google', { callbackUrl: '/auth/callback' });
   };
 
   return (

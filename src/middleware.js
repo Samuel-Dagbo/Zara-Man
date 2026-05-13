@@ -2,38 +2,38 @@ import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
 export async function middleware(request) {
-  const token = await getToken({ 
-    req: request, 
-    secret: process.env.NEXTAUTH_SECRET 
-  });
-  
   const { pathname } = request.nextUrl;
+  const isDashboard = pathname.startsWith('/dashboard');
+  const isAuthPage = pathname === '/auth/signin' || pathname === '/auth/signup';
 
-  if (pathname.startsWith('/dashboard')) {
+  if (!isDashboard && !isAuthPage) {
+    return NextResponse.next();
+  }
+
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
+  if (isDashboard) {
     if (!token) {
-      return NextResponse.redirect(new URL('/auth/signin', request.url));
+      const signInUrl = new URL('/auth/signin', request.url);
+      signInUrl.searchParams.set('callbackUrl', encodeURI(pathname));
+      return NextResponse.redirect(signInUrl);
     }
-    
-    if (pathname.startsWith('/dashboard/admin')) {
-      if (token.role !== 'admin') {
-        return NextResponse.redirect(new URL('/dashboard/user', request.url));
-      }
+
+    if (pathname.startsWith('/dashboard/admin') && token.role !== 'admin') {
+      return NextResponse.redirect(new URL('/dashboard/user', request.url));
     }
-    
-    if (pathname.startsWith('/dashboard/user')) {
-      if (token.role === 'admin') {
-        return NextResponse.redirect(new URL('/dashboard/admin', request.url));
-      }
+
+    if (pathname.startsWith('/dashboard/user') && token.role === 'admin') {
+      return NextResponse.redirect(new URL('/dashboard/admin', request.url));
     }
   }
 
-  if (pathname === '/auth/signin' || pathname === '/auth/signup') {
-    if (token) {
-      if (token.role === 'admin') {
-        return NextResponse.redirect(new URL('/dashboard/admin', request.url));
-      }
-      return NextResponse.redirect(new URL('/shop', request.url));
-    }
+  if (isAuthPage && token) {
+    const dashboardUrl = token.role === 'admin' ? '/dashboard/admin' : '/shop';
+    return NextResponse.redirect(new URL(dashboardUrl, request.url));
   }
 
   return NextResponse.next();
