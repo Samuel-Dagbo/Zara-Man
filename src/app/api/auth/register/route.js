@@ -3,48 +3,56 @@ import bcrypt from 'bcryptjs';
 import { connectDB } from '@/lib/mongodb';
 import User from '@/lib/models/User';
 
-function validatePassword(password) {
-  const errors = [];
-  if (password.length < 8) errors.push('At least 8 characters');
-  if (!/[A-Z]/.test(password)) errors.push('One uppercase letter');
-  if (!/[a-z]/.test(password)) errors.push('One lowercase letter');
-  if (!/[0-9]/.test(password)) errors.push('One number');
-  if (!/[^A-Za-z0-9]/.test(password)) errors.push('One special character');
-  return errors;
-}
-
 export async function POST(request) {
   try {
-    const { name, email, password } = await request.json();
+    const body = await request.json();
+    const { name, email, password } = body;
 
     if (!name || !email || !password) {
-      return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Name, email, and password are required' },
+        { status: 400 }
+      );
     }
 
-    const passwordErrors = validatePassword(password);
-    if (passwordErrors.length > 0) {
+    if (password.length < 6) {
       return NextResponse.json(
-        { error: `Password must contain: ${passwordErrors.join(', ')}` },
+        { error: 'Password must be at least 6 characters' },
         { status: 400 }
       );
     }
 
     await connectDB();
 
-    const existing = await User.findOne({ email }).lean();
-    if (existing) {
-      return NextResponse.json({ error: 'Email already registered' }, { status: 400 });
+    const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
+    if (existingUser) {
+      return NextResponse.json(
+        { error: 'Email already registered' },
+        { status: 400 }
+      );
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
+
     const user = await User.create({
-      name,
-      email,
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
       password: hashedPassword,
+      role: 'user',
     });
 
-    return NextResponse.json({ id: user._id, name: user.name, email: user.email }, { status: 201 });
+    return NextResponse.json(
+      { 
+        message: 'Account created successfully',
+        user: { id: user._id, name: user.name, email: user.email }
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Registration error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }

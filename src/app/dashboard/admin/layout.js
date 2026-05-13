@@ -5,8 +5,14 @@ import AdminSidebar from '@/components/dashboard/AdminSidebar';
 
 export default async function AdminDashboardLayout({ children }) {
   const session = await getServerSession(authOptions);
-  if (!session) redirect('/auth/signin');
-  if (session.user.role !== 'admin') redirect('/dashboard/user');
+
+  if (!session) {
+    redirect('/auth/signin');
+  }
+
+  if (session.user.role !== 'admin') {
+    redirect('/dashboard/user');
+  }
 
   return (
     <div className="flex min-h-screen bg-luxury-50">

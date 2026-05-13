@@ -1,33 +1,44 @@
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-export async function middleware(req) {
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  const path = req.nextUrl.pathname;
+export async function middleware(request) {
+  const token = await getToken({ 
+    req: request, 
+    secret: process.env.NEXTAUTH_SECRET 
+  });
+  
+  const { pathname } = request.nextUrl;
 
-  if (!token) {
-    if (path.startsWith('/dashboard')) {
-      return NextResponse.redirect(new URL('/auth/signin', req.url));
+  if (pathname.startsWith('/dashboard')) {
+    if (!token) {
+      return NextResponse.redirect(new URL('/auth/signin', request.url));
     }
-    return NextResponse.next();
+    
+    if (pathname.startsWith('/dashboard/admin')) {
+      if (token.role !== 'admin') {
+        return NextResponse.redirect(new URL('/dashboard/user', request.url));
+      }
+    }
+    
+    if (pathname.startsWith('/dashboard/user')) {
+      if (token.role === 'admin') {
+        return NextResponse.redirect(new URL('/dashboard/admin', request.url));
+      }
+    }
   }
 
-  if (path.startsWith('/auth/signin') || path.startsWith('/auth/signup')) {
-    const dashboardUrl = token.role === 'admin' ? '/dashboard/admin' : '/shop';
-    return NextResponse.redirect(new URL(dashboardUrl, req.url));
-  }
-
-  if (path.startsWith('/dashboard/admin') && token.role !== 'admin') {
-    return NextResponse.redirect(new URL('/dashboard/user', req.url));
-  }
-
-  if (path.startsWith('/dashboard/user') && token.role !== 'user' && token.role !== 'admin') {
-    return NextResponse.redirect(new URL('/dashboard/admin', req.url));
+  if (pathname === '/auth/signin' || pathname === '/auth/signup') {
+    if (token) {
+      if (token.role === 'admin') {
+        return NextResponse.redirect(new URL('/dashboard/admin', request.url));
+      }
+      return NextResponse.redirect(new URL('/shop', request.url));
+    }
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/auth/:path*'],
+  matcher: ['/dashboard/:path*', '/auth/signin', '/auth/signup'],
 };

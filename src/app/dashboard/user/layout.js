@@ -5,8 +5,14 @@ import UserSidebar from '@/components/dashboard/UserSidebar';
 
 export default async function UserDashboardLayout({ children }) {
   const session = await getServerSession(authOptions);
-  if (!session) redirect('/auth/signin');
-  if (session.user.role !== 'user') redirect('/dashboard/admin');
+
+  if (!session) {
+    redirect('/auth/signin');
+  }
+
+  if (session.user.role === 'admin') {
+    redirect('/dashboard/admin');
+  }
 
   return (
     <div className="flex min-h-screen bg-luxury-50">

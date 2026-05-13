@@ -1,15 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn, getSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { HiOutlineMail, HiOutlineLockClosed } from 'react-icons/hi';
 
 export default function SignInPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ email: '', password: '', rememberMe: false });
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/shop';
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -18,28 +22,22 @@ export default function SignInPage() {
     setLoading(true);
     setError('');
 
-    try {
-      const result = await signIn('credentials', {
-        email: form.email,
-        password: form.password,
-        redirect: false,
-      });
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
 
-      if (result?.error) {
-        setError('Invalid email or password');
-      } else {
-        const session = await getSession();
-        if (session?.user?.role === 'admin') {
-          router.replace('/dashboard/admin');
-        } else {
-          router.replace('/shop');
-        }
-      }
-    } catch (err) {
-      setError('Something went wrong');
-    } finally {
+    if (result?.error) {
+      setError('Invalid email or password');
       setLoading(false);
+    } else {
+      router.push(callbackUrl);
     }
+  };
+
+  const handleGoogleLogin = () => {
+    signIn('google', { callbackUrl: '/' });
   };
 
   return (
@@ -84,8 +82,8 @@ export default function SignInPage() {
                 <input
                   type="email"
                   required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="input-field pl-12"
                   placeholder="your@email.com"
                 />
@@ -99,8 +97,8 @@ export default function SignInPage() {
                 <input
                   type="password"
                   required
-                  value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="input-field pl-12"
                   placeholder="Enter your password"
                 />
@@ -109,12 +107,7 @@ export default function SignInPage() {
 
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={form.rememberMe}
-                  onChange={(e) => setForm({ ...form, rememberMe: e.target.checked })}
-                  className="w-4 h-4 accent-espresso"
-                />
+                <input type="checkbox" className="w-4 h-4 accent-espresso" />
                 <span className="text-sm text-luxury-500">Remember me (30 days)</span>
               </label>
               <Link href="/auth/forgot-password" className="text-sm text-espresso hover:text-gold-500">
@@ -142,7 +135,7 @@ export default function SignInPage() {
 
             <button
               type="button"
-              onClick={() => signIn('google', { callbackUrl: '/' })}
+              onClick={handleGoogleLogin}
               className="w-full border-2 border-luxury-200 text-espresso py-4 tracking-wider uppercase text-sm 
                          font-medium hover:border-espresso transition-all duration-300 flex items-center justify-center gap-3"
             >
