@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
+import { generateCartItemId } from '@/lib/utils';
 
 const CartContext = createContext();
 
@@ -10,12 +11,18 @@ export function CartProvider({ children }) {
   const [cartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('zaraman247-cart');
-    if (saved) setCart(JSON.parse(saved));
+    try {
+      const saved = localStorage.getItem('osebo247-cart');
+      if (saved) setCart(JSON.parse(saved));
+    } catch (e) {
+      localStorage.removeItem('osebo247-cart');
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('zaraman247-cart', JSON.stringify(cart));
+    try {
+      localStorage.setItem('osebo247-cart', JSON.stringify(cart));
+    } catch (e) {}
   }, [cart]);
 
   const addToCart = useCallback((product, quantity = 1, size = '', color = '') => {
@@ -33,6 +40,7 @@ export function CartProvider({ children }) {
       }
       toast.success('Added to cart');
       return [...prev, {
+        cartItemId: generateCartItemId(),
         _id: product._id,
         name: product.name,
         price: product.price,
@@ -45,15 +53,15 @@ export function CartProvider({ children }) {
     setCartOpen(true);
   }, []);
 
-  const removeFromCart = useCallback((index) => {
-    setCart(prev => prev.filter((_, i) => i !== index));
+  const removeFromCart = useCallback((cartItemId) => {
+    setCart(prev => prev.filter(item => item.cartItemId !== cartItemId));
     toast.success('Removed from cart');
   }, []);
 
-  const updateQuantity = useCallback((index, quantity) => {
+  const updateQuantity = useCallback((cartItemId, quantity) => {
     if (quantity < 1) return;
-    setCart(prev => prev.map((item, i) =>
-      i === index ? { ...item, quantity } : item
+    setCart(prev => prev.map(item =>
+      item.cartItemId === cartItemId ? { ...item, quantity } : item
     ));
   }, []);
 

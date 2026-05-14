@@ -4,9 +4,9 @@ import './globals.css';
 import Providers from './providers';
 
 export const metadata = {
-  title: 'Zara Man 247 — Luxury Menswear & Accessories',
-  description: 'Discover curated luxury menswear, suits, watches, shoes and accessories at Zara Man 247. Elevate your style with our exclusive gentlemen collections.',
-  keywords: 'menswear, zara man 247, luxury, suits, watches, shoes, accessories, gentlemen',
+  title: 'OSEBO 247 — Premium Fashion & Style',
+  description: 'Discover curated premium fashion and style at OSEBO 247. Elevate your wardrobe with our exclusive collections.',
+  keywords: 'fashion, osebo 247, premium, suits, watches, shoes, accessories, style',
 };
 
 export default async function RootLayout({ children }) {

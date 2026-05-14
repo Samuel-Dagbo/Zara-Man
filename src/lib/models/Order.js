@@ -12,7 +12,9 @@ const OrderItemSchema = new mongoose.Schema({
 
 const OrderSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    type: { type: String, enum: ['online', 'pos'], default: 'online' },
+    customerName: { type: String, default: '' },
     items: [OrderItemSchema],
     totalAmount: { type: Number, required: true },
     status: {
@@ -23,11 +25,11 @@ const OrderSchema = new mongoose.Schema(
     paymentMethod: { type: String, default: 'card' },
     paymentStatus: { type: String, enum: ['pending', 'paid', 'refunded'], default: 'pending' },
     shippingAddress: {
-      fullName: { type: String, required: true },
-      street: { type: String, required: true },
-      city: { type: String, required: true },
-      state: { type: String, required: true },
-      zip: { type: String, required: true },
+      fullName: { type: String, default: '' },
+      street: { type: String, default: '' },
+      city: { type: String, default: '' },
+      state: { type: String, default: '' },
+      zip: { type: String, default: '' },
       phone: { type: String, default: '' },
     },
     notes: { type: String, default: '' },

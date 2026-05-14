@@ -11,7 +11,7 @@ export async function uploadImage(file) {
     const buffer = Buffer.from(await file.arrayBuffer());
     const result = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
-        { folder: 'zaraman247', resource_type: 'image' },
+        { folder: 'osebo247', resource_type: 'image' },
         (error, result) => {
           if (error) reject(error);
           else resolve(result);
@@ -19,7 +19,7 @@ export async function uploadImage(file) {
       );
       uploadStream.end(buffer);
     });
-    return result.secure_url;
+    return result;
   } catch (error) {
     console.error('Cloudinary upload error:', error);
     throw new Error('Failed to upload image');
@@ -36,6 +36,8 @@ export async function deleteImage(publicId) {
 
 export function getPublicId(url) {
   const parts = url.split('/');
+  const folderIndex = parts.indexOf('osebo247');
+  if (folderIndex === -1) return null;
   const file = parts[parts.length - 1];
-  return `boutique/${file.split('.')[0]}`;
+  return `osebo247/${file.split('.')[0]}`;
 }

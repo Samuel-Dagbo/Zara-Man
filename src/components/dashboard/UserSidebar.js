@@ -23,7 +23,7 @@ export default function UserSidebar() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 w-10 h-10 bg-espresso text-cream rounded-lg flex items-center justify-center shadow-lg hover:bg-gold-500 transition-colors"
+        className="lg:hidden fixed top-4 left-4 z-50 w-10 h-10 bg-gold-500 text-dark-950 flex items-center justify-center shadow-lg shadow-gold-500/20 hover:bg-gold-400 transition-colors"
         aria-label="Open menu"
       >
         <HiOutlineMenu className="w-5 h-5" />
@@ -31,23 +31,23 @@ export default function UserSidebar() {
 
       {open && (
         <div
-          className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/80 z-40 lg:hidden backdrop-blur-sm"
           onClick={() => setOpen(false)}
         />
       )}
 
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-luxury-100 min-h-screen flex flex-col shadow-lg shadow-luxury-100/50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-dark-950 border-r border-gold-500/10 min-h-screen flex flex-col transform transition-transform duration-300 ease-in-out ${
           open ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0`}
       >
-        <div className="flex items-center justify-between p-6 border-b border-luxury-100">
-          <Link href="/" className="font-display text-xl font-bold text-espresso tracking-wider hover:text-gold-500 transition-colors">
-            ZARA MAN 247
+        <div className="flex items-center justify-between p-6 border-b border-gold-500/10">
+          <Link href="/" className="font-display text-lg font-bold tracking-wider text-gold-500">
+            <span className="text-gold-400">OSEBO</span> 247
           </Link>
           <button
             onClick={() => setOpen(false)}
-            className="lg:hidden text-luxury-400 hover:text-espresso transition-colors"
+            className="lg:hidden text-gold-500/40 hover:text-gold-500 transition-colors"
             aria-label="Close menu"
           >
             <HiOutlineX className="w-5 h-5" />
@@ -61,26 +61,26 @@ export default function UserSidebar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-3 px-4 py-3 text-sm rounded-lg transition-all duration-200 ${
+                className={`flex items-center gap-3 px-4 py-3 text-xs transition-all duration-200 ${
                   isActive
-                    ? 'bg-gradient-to-r from-espresso to-luxury-800 text-cream font-medium shadow-lg shadow-espresso/20'
-                    : 'text-luxury-600 hover:bg-luxury-50 hover:text-espresso hover:translate-x-1'
+                    ? 'bg-gold-500 text-dark-950 font-bold shadow-lg shadow-gold-500/10'
+                    : 'text-gold-500/60 hover:bg-gold-500/10 hover:text-gold-400 hover:translate-x-1'
                 }`}
               >
-                <link.icon className="w-5 h-5 flex-shrink-0" />
-                <span>{link.label}</span>
+                <link.icon className="w-4 h-4 flex-shrink-0" />
+                <span className="tracking-wider uppercase text-[10px]">{link.label}</span>
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-luxury-100">
+        <div className="p-4 border-t border-gold-500/10">
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="flex items-center gap-3 px-4 py-3 text-sm text-luxury-600 hover:bg-red-50 hover:text-red-600 w-full transition-all duration-200 rounded-lg"
+            className="flex items-center gap-3 px-4 py-3 text-xs text-gold-500/40 hover:bg-gold-500/10 hover:text-gold-500 w-full transition-all duration-200"
           >
-            <HiOutlineLogout className="w-5 h-5 flex-shrink-0" />
-            <span>Sign Out</span>
+            <HiOutlineLogout className="w-4 h-4 flex-shrink-0" />
+            <span className="tracking-wider uppercase text-[10px]">Sign Out</span>
           </button>
         </div>
       </aside>

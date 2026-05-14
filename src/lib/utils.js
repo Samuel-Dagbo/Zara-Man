@@ -1,7 +1,7 @@
 export function formatPrice(price) {
-  return new Intl.NumberFormat('en-GH', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'GHS',
+    currency: 'USD',
   }).format(price);
 }
 
@@ -37,3 +37,7 @@ export const orderStatuses = [
   { value: 'delivered', label: 'Delivered', color: 'bg-green-100 text-green-800' },
   { value: 'cancelled', label: 'Cancelled', color: 'bg-red-100 text-red-800' },
 ];
+
+export function generateCartItemId() {
+  return Math.random().toString(36).substring(2, 11);
+}

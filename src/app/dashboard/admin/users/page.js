@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import StatsCard from '@/components/dashboard/StatsCard';
 import { StatsCardSkeleton, TableSkeleton } from '@/components/ui/Skeleton';
@@ -61,8 +61,8 @@ export default function AdminUsersPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-3xl font-display font-bold text-espresso">User Management</h1>
-          <p className="text-luxury-500 mt-1">View and manage registered users.</p>
+          <h1 className="text-3xl font-display font-bold text-gold-500">User Management</h1>
+          <p className="text-gold-500/50 mt-1 text-sm">View and manage registered users.</p>
         </div>
         <EmptyState
           icon={HiOutlineExclamationCircle}
@@ -81,8 +81,8 @@ export default function AdminUsersPage() {
   return (
     <div>
       <div className="mb-6 lg:mb-8">
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-espresso">User Management</h1>
-        <p className="text-sm lg:text-base text-luxury-500 mt-1">View and manage registered users.</p>
+        <h1 className="text-2xl lg:text-3xl font-display font-bold text-gold-500">User Management</h1>
+        <p className="text-sm lg:text-base text-gold-500/50 mt-1">View and manage registered users.</p>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
@@ -123,32 +123,32 @@ export default function AdminUsersPage() {
                   <tr key={user._id}>
                     <td>
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-gold-500/20 to-gold-500/5 rounded-full flex items-center justify-center">
-                          <HiOutlineUser className="w-5 h-5 text-gold-600" />
+                        <div className="w-10 h-10 border border-gold-500/20 flex items-center justify-center">
+                          <HiOutlineUser className="w-5 h-5 text-gold-500" />
                         </div>
-                        <p className="text-sm font-medium text-espresso">{user.name}</p>
+                        <p className="text-sm font-bold text-gold-400">{user.name}</p>
                       </div>
                     </td>
-                    <td className="text-sm text-luxury-600">{user.email}</td>
+                    <td className="text-sm text-gold-500/50">{user.email}</td>
                     <td>
                       <span className={`badge ${user.role === 'admin' ? 'badge-purple' : 'badge-blue'}`}>
                         {user.role}
                       </span>
                     </td>
-                    <td className="text-sm text-luxury-500">
+                    <td className="text-sm text-gold-500/50">
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
                     <td className="text-right">
                       <div className="flex items-center justify-end gap-1 sm:gap-2">
                         <button
                           onClick={() => toggleRole(user._id, user.role)}
-                          className="px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs tracking-wider uppercase rounded-lg border border-luxury-200 text-luxury-600 hover:border-espresso hover:text-espresso hover:bg-luxury-50 transition-all font-medium"
+                          className="px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs tracking-wider uppercase border border-gold-500/10 text-gold-500/40 hover:border-gold-500/30 hover:text-gold-400 hover:bg-gold-500/5 transition-all font-bold"
                         >
                           Make {user.role === 'admin' ? 'User' : 'Admin'}
                         </button>
                         <button
                           onClick={() => handleDelete(user._id)}
-                          className="p-1.5 sm:p-2 rounded-lg text-luxury-500 hover:text-red-600 hover:bg-red-50 transition-all"
+                          className="p-1.5 sm:p-2 text-gold-500/30 hover:text-red-400 hover:bg-red-500/10 transition-all"
                           aria-label="Delete user"
                         >
                           <HiOutlineTrash className="w-3.5 h-3.5 sm:w-4 sm:h-4" />

@@ -8,6 +8,7 @@ import { StatsCardSkeleton, TableSkeleton } from '@/components/ui/Skeleton';
 import EmptyState from '@/components/ui/EmptyState';
 import { HiOutlineCollection, HiOutlinePlus, HiOutlinePencil, HiOutlineTrash, HiOutlineX, HiOutlineExclamationCircle } from 'react-icons/hi';
 import { formatPrice, categories } from '@/lib/utils';
+import ImageUploader from '@/components/ui/ImageUploader';
 
 const catList = categories.filter(c => c.id !== 'all');
 
@@ -31,9 +32,10 @@ export default function AdminProductsPage() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('/api/products');
+      const res = await fetch('/api/products?all=true');
       if (!res.ok) throw new Error('Failed to fetch products');
-      setProducts(await res.json());
+      const data = await res.json();
+      setProducts(data.products || data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -133,8 +135,8 @@ export default function AdminProductsPage() {
       <div>
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-display font-bold text-espresso">Products</h1>
-            <p className="text-luxury-500 mt-1">Manage your inventory.</p>
+            <h1 className="text-3xl font-display font-bold text-gold-500">Products</h1>
+            <p className="text-gold-500/50 mt-1 text-sm">Manage your inventory.</p>
           </div>
         </div>
         <EmptyState
@@ -152,10 +154,10 @@ export default function AdminProductsPage() {
     <div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-6 lg:mb-8">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-espresso">Products</h1>
-          <p className="text-sm lg:text-base text-luxury-500 mt-1">Manage your inventory.</p>
+          <h1 className="text-2xl lg:text-3xl font-display font-bold text-gold-500">Products</h1>
+          <p className="text-sm lg:text-base text-gold-500/50 mt-1">Manage your inventory.</p>
         </div>
-        <button onClick={openCreate} className="btn-primary flex items-center gap-2 shadow-lg shadow-espresso/20 text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 w-full sm:w-auto justify-center">
+        <button onClick={openCreate} className="btn-primary flex items-center gap-2 text-xs px-6 sm:px-8 py-2.5 sm:py-3 w-full sm:w-auto justify-center shadow-gold-500/20">
           <HiOutlinePlus className="w-4 h-4" />
           Add Product
         </button>
@@ -204,20 +206,20 @@ export default function AdminProductsPage() {
                   <tr key={product._id}>
                     <td>
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-14 bg-luxury-100 flex-shrink-0 overflow-hidden rounded-lg">
+                        <div className="w-12 h-14 bg-dark-800/60 flex-shrink-0 overflow-hidden border border-gold-500/10">
                           <img src={product.images?.[0] || ''} alt="" className="w-full h-full object-cover" />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-sm font-medium text-espresso truncate">{product.name}</p>
-                          <p className="text-xs text-luxury-500">{product._id?.slice(-6).toUpperCase()}</p>
+                          <p className="text-sm font-bold text-gold-400 truncate">{product.name}</p>
+                          <p className="text-[10px] text-gold-500/40 tracking-wider">{product._id?.slice(-6).toUpperCase()}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="text-sm text-luxury-600 capitalize">{product.category}</td>
+                    <td className="text-sm text-gold-500/50 capitalize">{product.category}</td>
                     <td>
-                      <p className="text-sm font-semibold">{formatPrice(product.price)}</p>
+                      <p className="text-sm font-bold text-gold-500">{formatPrice(product.price)}</p>
                       {product.comparePrice > 0 && (
-                        <p className="text-xs text-luxury-400 line-through">{formatPrice(product.comparePrice)}</p>
+                        <p className="text-[10px] text-gold-500/30 line-through">{formatPrice(product.comparePrice)}</p>
                       )}
                     </td>
                     <td>
@@ -226,16 +228,16 @@ export default function AdminProductsPage() {
                       </span>
                     </td>
                     <td>
-                      <span className={`text-sm ${product.quantity <= 5 && product.inStock ? 'text-red-600 font-semibold' : 'text-luxury-600'}`}>
+                      <span className={`text-sm font-bold ${product.quantity <= 5 && product.inStock ? 'text-red-400' : 'text-gold-500/50'}`}>
                         {product.quantity ?? '-'}
                       </span>
                     </td>
                     <td className="text-right">
                       <div className="flex items-center justify-end gap-1">
-                        <button onClick={() => openEdit(product)} className="p-2 rounded-lg text-luxury-500 hover:text-blue-600 hover:bg-blue-50 transition-all" title="Edit">
+                        <button onClick={() => openEdit(product)} className="p-2 text-gold-500/40 hover:text-gold-500 hover:bg-gold-500/10 transition-all" title="Edit">
                           <HiOutlinePencil className="w-4 h-4" />
                         </button>
-                        <button onClick={() => handleDelete(product._id)} className="p-2 rounded-lg text-luxury-500 hover:text-red-600 hover:bg-red-50 transition-all" title="Delete">
+                        <button onClick={() => handleDelete(product._id)} className="p-2 text-gold-500/40 hover:text-red-400 hover:bg-red-500/10 transition-all" title="Delete">
                           <HiOutlineTrash className="w-4 h-4" />
                         </button>
                       </div>
@@ -256,108 +258,99 @@ export default function AdminProductsPage() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowModal(false)}
-              className="fixed inset-0 bg-black/50 z-50"
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
             />
             <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:max-w-2xl bg-cream overflow-y-auto max-h-[90vh] pointer-events-auto rounded-xl"
+                className="w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:max-w-2xl bg-dark-950 overflow-y-auto max-h-[90vh] pointer-events-auto border border-gold-500/10"
               >
                 <div className="p-4 sm:p-6 md:p-8">
                   <div className="flex items-center justify-between mb-4 sm:mb-6">
-                    <h2 className="font-display text-xl sm:text-2xl font-bold text-espresso">
+                    <h2 className="font-display text-xl sm:text-2xl font-bold text-gold-500">
                       {editingProduct ? 'Edit Product' : 'New Product'}
                     </h2>
-                    <button onClick={() => setShowModal(false)} className="p-2 hover:text-gold-500 transition-colors">
+                    <button onClick={() => setShowModal(false)} className="p-2 text-gold-500/40 hover:text-gold-500 transition-colors">
                       <HiOutlineX className="w-5 h-5" />
                     </button>
                   </div>
                   <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div className="sm:col-span-2">
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Name</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Name</label>
                         <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="input-field" />
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Description</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Description</label>
                         <textarea required rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="input-field resize-none" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Price (GHS)</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Price (GHS)</label>
                         <input type="number" step="0.01" required value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="input-field" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Compare Price</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Compare Price</label>
                         <input type="number" step="0.01" value={form.comparePrice} onChange={(e) => setForm({ ...form, comparePrice: e.target.value })} className="input-field" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Category</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Category</label>
                         <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="input-field">
                           {catList.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Quantity</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Quantity</label>
                         <input type="number" min="0" value={form.quantity} onChange={(e) => setForm({ ...form, quantity: e.target.value })} className="input-field" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Material</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Material</label>
                         <input type="text" value={form.material} onChange={(e) => setForm({ ...form, material: e.target.value })} className="input-field" />
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Images</label>
-                        {form.images.map((img, i) => (
-                          <div key={i} className="flex gap-2 mb-2">
-                            <input type="url" value={img} onChange={(e) => { const imgs = [...form.images]; imgs[i] = e.target.value; setForm({ ...form, images: imgs }); }} className="input-field" placeholder="https://..." />
-                            {form.images.length > 1 && (
-                              <button type="button" onClick={() => setForm({ ...form, images: form.images.filter((_, j) => j !== i) })} className="p-3 text-red-500 hover:bg-red-50 transition-colors">
-                                <HiOutlineX className="w-4 h-4" />
-                              </button>
-                            )}
-                          </div>
-                        ))}
-                        <button type="button" onClick={() => setForm({ ...form, images: [...form.images, ''] })} className="text-sm text-gold-500 hover:text-gold-600 transition-colors">
-                          + Add another image
-                        </button>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Images</label>
+                        <ImageUploader
+                          images={form.images.filter(i => i)}
+                          onChange={(urls) => setForm({ ...form, images: urls.length ? urls : [''] })}
+                        />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Sizes (comma separated)</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Sizes (comma separated)</label>
                         <input type="text" value={form.sizes.join(', ')} onChange={(e) => setForm({ ...form, sizes: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })} className="input-field" placeholder="XS, S, M, L, XL" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Colors (comma separated)</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Colors (comma separated)</label>
                         <input type="text" value={form.colors.join(', ')} onChange={(e) => setForm({ ...form, colors: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })} className="input-field" placeholder="Black, White, Red" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Care Instructions</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Care Instructions</label>
                         <input type="text" value={form.careInstructions} onChange={(e) => setForm({ ...form, careInstructions: e.target.value })} className="input-field" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-espresso tracking-wide uppercase mb-2">Rating</label>
+                        <label className="block text-xs font-bold text-gold-500/60 tracking-[0.15em] uppercase mb-2">Rating</label>
                         <input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={(e) => setForm({ ...form, rating: e.target.value })} className="input-field" />
                       </div>
                     </div>
                     <div className="flex flex-wrap items-center gap-3 sm:gap-6">
                       <label className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} className="w-4 h-4 text-gold-500 focus:ring-gold-500" />
-                        <span className="text-xs sm:text-sm text-espresso">In Stock</span>
+                        <input type="checkbox" checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} className="w-4 h-4 text-gold-500 focus:ring-gold-500 bg-dark-900 border-gold-500/20" />
+                        <span className="text-xs sm:text-sm text-gold-400">In Stock</span>
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} className="w-4 h-4 text-gold-500 focus:ring-gold-500" />
-                        <span className="text-xs sm:text-sm text-espresso">Featured</span>
+                        <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} className="w-4 h-4 text-gold-500 focus:ring-gold-500 bg-dark-900 border-gold-500/20" />
+                        <span className="text-xs sm:text-sm text-gold-400">Featured</span>
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" checked={form.onSale} onChange={(e) => setForm({ ...form, onSale: e.target.checked })} className="w-4 h-4 text-gold-500 focus:ring-gold-500" />
-                        <span className="text-xs sm:text-sm text-espresso">On Sale</span>
+                        <input type="checkbox" checked={form.onSale} onChange={(e) => setForm({ ...form, onSale: e.target.checked })} className="w-4 h-4 text-gold-500 focus:ring-gold-500 bg-dark-900 border-gold-500/20" />
+                        <span className="text-xs sm:text-sm text-gold-400">On Sale</span>
                       </label>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-3 sm:pt-4">
-                      <button type="submit" disabled={submitting} className="btn-primary flex-1 disabled:opacity-50 text-center text-xs sm:text-sm">
+                      <button type="submit" disabled={submitting} className="btn-primary flex-1 disabled:opacity-50 text-center text-xs shadow-gold-500/20">
                         {submitting ? 'Saving...' : editingProduct ? 'Update Product' : 'Create Product'}
                       </button>
-                      <button type="button" onClick={() => setShowModal(false)} className="btn-secondary flex-1 text-center text-xs sm:text-sm">Cancel</button>
+                      <button type="button" onClick={() => setShowModal(false)} className="btn-secondary flex-1 text-center text-xs">Cancel</button>
                     </div>
                   </form>
                 </div>

@@ -9,7 +9,7 @@ export default function Card({ children, className = '', hover = true }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={hover ? { y: -5, transition: { duration: 0.2 } } : {}}
-      className={`bg-white border border-luxury-100 shadow-sm ${className}`}
+      className={`bg-dark-900/60 border border-gold-500/10 backdrop-blur-sm hover:border-gold-500/30 transition-all duration-500 ${className}`}
     >
       {children}
     </motion.div>

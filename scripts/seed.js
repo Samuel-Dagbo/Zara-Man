@@ -50,8 +50,37 @@ const ProductSchema = new mongoose.Schema({
   careInstructions: String,
 }, { timestamps: true });
 
+// Order Schema
+const OrderSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  items: [{
+    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+    name: String,
+    price: Number,
+    quantity: Number,
+    size: String,
+    color: String,
+    image: String,
+  }],
+  totalAmount: Number,
+  status: { type: String, default: 'pending' },
+  paymentMethod: { type: String, default: 'paypal' },
+  paymentStatus: { type: String, default: 'pending' },
+  shippingAddress: {
+    fullName: String,
+    street: String,
+    city: String,
+    state: String,
+    zip: String,
+    phone: String,
+  },
+  notes: String,
+  trackingNumber: String,
+}, { timestamps: true });
+
 const User = mongoose.models.User || mongoose.model('User', UserSchema);
 const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
+const Order = mongoose.models.Order || mongoose.model('Order', OrderSchema);
 
 const seedProducts = [
   // Suits & Blazers
@@ -420,18 +449,19 @@ async function seed() {
     // Clear existing data
     await User.deleteMany({});
     await Product.deleteMany({});
+    await Order.deleteMany({});
     console.log('Cleared existing data');
 
     // Create admin user
     const adminPassword = await bcrypt.hash('admin123', 12);
     await User.create({
       name: 'Admin',
-      email: 'admin@zaraman247.com',
+      email: 'admin@osebo247.com',
       password: adminPassword,
       role: 'admin',
       phone: '+1 (555) 000-0001',
     });
-    console.log('✓ Admin user created: admin@zaraman247.com / admin123');
+    console.log('✓ Admin user created: admin@osebo247.com / admin123');
 
     // Create test user
     const userPassword = await bcrypt.hash('user123', 12);
@@ -475,12 +505,76 @@ async function seed() {
     }
     console.log(`✓ ${seedProducts.length} products seeded`);
 
+    // Seed test orders
+    const allProducts = await Product.find({}).lean();
+    const [user1, user2] = await User.find({ role: 'user' }).lean();
+
+    const testOrders = [
+      {
+        user: user1._id,
+        items: [
+          { product: allProducts[0]._id, name: allProducts[0].name, price: allProducts[0].price, quantity: 1, size: '40R', color: 'Navy', image: allProducts[0].images[0] },
+          { product: allProducts[4]._id, name: allProducts[4].name, price: allProducts[4].price, quantity: 2, size: 'M', color: 'White', image: allProducts[4].images[0] },
+        ],
+        totalAmount: allProducts[0].price + (allProducts[4].price * 2),
+        status: 'delivered',
+        paymentMethod: 'paypal',
+        paymentStatus: 'paid',
+        shippingAddress: { fullName: 'James Mitchell', street: '123 Park Avenue', city: 'New York', state: 'NY', zip: '10001', phone: '+1 (555) 000-0002' },
+        trackingNumber: '1Z999AA10123456784',
+        createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+      },
+      {
+        user: user1._id,
+        items: [
+          { product: allProducts[8]._id, name: allProducts[8].name, price: allProducts[8].price, quantity: 1, size: '10', color: 'Black', image: allProducts[8].images[0] },
+        ],
+        totalAmount: allProducts[8].price,
+        status: 'shipped',
+        paymentMethod: 'paypal',
+        paymentStatus: 'paid',
+        shippingAddress: { fullName: 'James Mitchell', street: '123 Park Avenue', city: 'New York', state: 'NY', zip: '10001', phone: '+1 (555) 000-0002' },
+        trackingNumber: '1Z999AA10123456785',
+        createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+      },
+      {
+        user: user1._id,
+        items: [
+          { product: allProducts[2]._id, name: allProducts[2].name, price: allProducts[2].price, quantity: 1, size: '40R', color: 'Black', image: allProducts[2].images[0] },
+          { product: allProducts[10]._id, name: allProducts[10].name, price: allProducts[10].price, quantity: 1, size: 'One Size', color: 'Silver Dial', image: allProducts[10].images[0] },
+        ],
+        totalAmount: allProducts[2].price + allProducts[10].price,
+        status: 'processing',
+        paymentMethod: 'paypal',
+        paymentStatus: 'paid',
+        shippingAddress: { fullName: 'James Mitchell', street: '123 Park Avenue', city: 'New York', state: 'NY', zip: '10001', phone: '+1 (555) 000-0002' },
+        createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+      },
+      {
+        user: user2._id,
+        items: [
+          { product: allProducts[6]._id, name: allProducts[6].name, price: allProducts[6].price, quantity: 1, size: 'L', color: 'Camel', image: allProducts[6].images[0] },
+        ],
+        totalAmount: allProducts[6].price,
+        status: 'pending',
+        paymentMethod: 'paypal',
+        paymentStatus: 'pending',
+        shippingAddress: { fullName: 'Alexander Stone', street: '456 Beverly Hills Drive', city: 'Los Angeles', state: 'CA', zip: '90210', phone: '+1 (555) 000-0003' },
+        createdAt: new Date(),
+      },
+    ];
+
+    for (const order of testOrders) {
+      await Order.create(order);
+    }
+    console.log(`✓ ${testOrders.length} test orders created`);
+
     console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('  Seeding Complete!');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('\n  Test Accounts:');
     console.log('  ─────────────────────────────');
-    console.log('  Admin:  admin@zaraman247.com / admin123');
+    console.log('  Admin:  admin@osebo247.com / admin123');
     console.log('  User 1: james@example.com  / user123');
     console.log('  User 2: alex@example.com   / test123');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');

@@ -68,23 +68,23 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-cream pt-20 lg:pt-0">
+    <div className="min-h-screen flex bg-dark-950 pt-20 lg:pt-0">
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-espresso via-espresso/95 to-espresso/90 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gold-500/30 via-gold-600/20 to-gold-500/10 z-10" />
         <img
           src="https://images.pexels.com/photos/29239014/pexels-photo-29239014.jpeg"
           alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-50"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
         />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold-500/15 via-transparent to-transparent z-20" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.2)_0%,_transparent_70%)] z-20" />
         <div className="relative z-30 text-center px-12">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
-            <div className="w-12 h-0.5 bg-gold-500 mx-auto mb-8" />
-            <h2 className="font-display text-5xl font-bold text-cream leading-tight">Join Us</h2>
-            <p className="text-cream/50 mt-4 text-lg max-w-md mx-auto leading-relaxed">
+            <div className="w-16 h-px bg-gold-500 mx-auto mb-8" />
+            <h2 className="font-display text-5xl font-bold text-gold-500 leading-tight">Join Us</h2>
+            <p className="text-gold-500/50 mt-4 text-lg max-w-md mx-auto leading-relaxed">
               Become part of our exclusive fashion community for gentlemen.
             </p>
-            <div className="w-12 h-0.5 bg-gold-500/50 mx-auto mt-8" />
+            <div className="w-16 h-px bg-gold-500/40 mx-auto mt-8" />
           </motion.div>
         </div>
       </div>
@@ -93,22 +93,22 @@ export default function SignUpPage() {
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="w-full max-w-md">
           <Link
             href="/"
-            className="font-display text-2xl sm:text-3xl font-bold text-espresso tracking-[0.15em] block mb-10 lg:mb-12 hover:text-gold-600 transition-colors"
+            className="font-display text-2xl sm:text-3xl font-bold tracking-[0.15em] block mb-10 lg:mb-12 text-gold-500 hover:text-gold-400 transition-colors"
           >
-            ZARA MAN 247
+            <span className="text-gold-400">OSEBO</span> 247
           </Link>
 
-          <motion.div variants={stagger} initial="initial" animate="animate" className="bg-white rounded-2xl shadow-xl shadow-luxury-100/50 border border-luxury-100 p-8 sm:p-10">
+          <motion.div variants={stagger} initial="initial" animate="animate" className="bg-dark-900/60 backdrop-blur-sm border border-gold-500/10 p-8 sm:p-10">
             <motion.div variants={fadeUp} className="mb-8">
-              <h1 className="text-3xl sm:text-4xl font-display font-bold text-espresso">Create account</h1>
-              <p className="text-luxury-500 mt-2 text-sm sm:text-base">Join us and start your style journey.</p>
+              <h1 className="text-3xl sm:text-4xl font-display font-bold text-gold-500">Create account</h1>
+              <p className="text-gold-500/50 mt-2 text-sm">Join us and start your style journey.</p>
             </motion.div>
 
             {error && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 text-sm rounded-xl flex items-center gap-3"
+                className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-center gap-3"
               >
                 <HiOutlineExclamationCircle className="w-5 h-5 flex-shrink-0 text-red-400" />
                 <span>{error}</span>
@@ -118,52 +118,52 @@ export default function SignUpPage() {
             <form onSubmit={handleSubmit}>
               <motion.div variants={stagger} initial="initial" animate="animate" className="space-y-4">
                 <motion.div variants={fadeUp}>
-                  <label className="block text-xs font-semibold text-luxury-600 tracking-[0.1em] uppercase mb-2">Full Name</label>
+                  <label className="block text-xs font-bold text-gold-500/60 tracking-[0.1em] uppercase mb-2">Full Name</label>
                   <div className="relative group">
-                    <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-luxury-300 group-focus-within:text-gold-500 transition-colors z-10" />
+                    <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gold-500/30 group-focus-within:text-gold-500 transition-colors z-10" />
                     <input
                       type="text"
                       required
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className="w-full h-12 pl-11 pr-4 bg-luxury-50 border border-luxury-200 rounded-xl text-espresso text-sm outline-none transition-all duration-200 focus:bg-white focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 placeholder:text-luxury-300"
+                      className="w-full h-12 pl-11 pr-4 bg-dark-950/80 border border-gold-500/20 text-gold-400 text-sm outline-none transition-all duration-200 focus:bg-dark-900 focus:border-gold-500/50 focus:ring-2 focus:ring-gold-500/10 placeholder:text-gold-500/20"
                       placeholder="John Doe"
                     />
                   </div>
                 </motion.div>
 
                 <motion.div variants={fadeUp}>
-                  <label className="block text-xs font-semibold text-luxury-600 tracking-[0.1em] uppercase mb-2">Email</label>
+                  <label className="block text-xs font-bold text-gold-500/60 tracking-[0.1em] uppercase mb-2">Email</label>
                   <div className="relative group">
-                    <HiOutlineMail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-luxury-300 group-focus-within:text-gold-500 transition-colors z-10" />
+                    <HiOutlineMail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gold-500/30 group-focus-within:text-gold-500 transition-colors z-10" />
                     <input
                       type="email"
                       required
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="w-full h-12 pl-11 pr-4 bg-luxury-50 border border-luxury-200 rounded-xl text-espresso text-sm outline-none transition-all duration-200 focus:bg-white focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 placeholder:text-luxury-300"
+                      className="w-full h-12 pl-11 pr-4 bg-dark-950/80 border border-gold-500/20 text-gold-400 text-sm outline-none transition-all duration-200 focus:bg-dark-900 focus:border-gold-500/50 focus:ring-2 focus:ring-gold-500/10 placeholder:text-gold-500/20"
                       placeholder="your@email.com"
                     />
                   </div>
                 </motion.div>
 
                 <motion.div variants={fadeUp}>
-                  <label className="block text-xs font-semibold text-luxury-600 tracking-[0.1em] uppercase mb-2">Password</label>
+                  <label className="block text-xs font-bold text-gold-500/60 tracking-[0.1em] uppercase mb-2">Password</label>
                   <div className="relative group">
-                    <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-luxury-300 group-focus-within:text-gold-500 transition-colors z-10" />
+                    <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gold-500/30 group-focus-within:text-gold-500 transition-colors z-10" />
                     <input
                       type={showPassword ? 'text' : 'password'}
                       required
                       minLength={6}
                       value={form.password}
                       onChange={(e) => setForm({ ...form, password: e.target.value })}
-                      className="w-full h-12 pl-11 pr-12 bg-luxury-50 border border-luxury-200 rounded-xl text-espresso text-sm outline-none transition-all duration-200 focus:bg-white focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 placeholder:text-luxury-300"
+                      className="w-full h-12 pl-11 pr-12 bg-dark-950/80 border border-gold-500/20 text-gold-400 text-sm outline-none transition-all duration-200 focus:bg-dark-900 focus:border-gold-500/50 focus:ring-2 focus:ring-gold-500/10 placeholder:text-gold-500/20"
                       placeholder="At least 6 characters"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-luxury-300 hover:text-espresso transition-colors rounded-lg hover:bg-luxury-100"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-gold-500/30 hover:text-gold-500 transition-colors hover:bg-gold-500/10"
                     >
                       {showPassword ? <HiOutlineEyeOff className="w-4 h-4" /> : <HiOutlineEye className="w-4 h-4" />}
                     </button>
@@ -171,21 +171,21 @@ export default function SignUpPage() {
                 </motion.div>
 
                 <motion.div variants={fadeUp}>
-                  <label className="block text-xs font-semibold text-luxury-600 tracking-[0.1em] uppercase mb-2">Confirm Password</label>
+                  <label className="block text-xs font-bold text-gold-500/60 tracking-[0.1em] uppercase mb-2">Confirm Password</label>
                   <div className="relative group">
-                    <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-luxury-300 group-focus-within:text-gold-500 transition-colors z-10" />
+                    <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gold-500/30 group-focus-within:text-gold-500 transition-colors z-10" />
                     <input
                       type={showConfirmPassword ? 'text' : 'password'}
                       required
                       value={form.confirmPassword}
                       onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
-                      className="w-full h-12 pl-11 pr-12 bg-luxury-50 border border-luxury-200 rounded-xl text-espresso text-sm outline-none transition-all duration-200 focus:bg-white focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 placeholder:text-luxury-300"
+                      className="w-full h-12 pl-11 pr-12 bg-dark-950/80 border border-gold-500/20 text-gold-400 text-sm outline-none transition-all duration-200 focus:bg-dark-900 focus:border-gold-500/50 focus:ring-2 focus:ring-gold-500/10 placeholder:text-gold-500/20"
                       placeholder="Repeat your password"
                     />
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-luxury-300 hover:text-espresso transition-colors rounded-lg hover:bg-luxury-100"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-gold-500/30 hover:text-gold-500 transition-colors hover:bg-gold-500/10"
                     >
                       {showConfirmPassword ? <HiOutlineEyeOff className="w-4 h-4" /> : <HiOutlineEye className="w-4 h-4" />}
                     </button>
@@ -196,9 +196,9 @@ export default function SignUpPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full h-12 bg-espresso text-cream text-sm tracking-[0.1em] uppercase font-semibold rounded-xl
+                    className="w-full h-12 bg-gold-500 text-dark-950 text-xs tracking-[0.1em] uppercase font-bold
                                transition-all duration-300 disabled:opacity-50 flex items-center justify-center
-                               hover:bg-gold-500 hover:text-espresso hover:shadow-lg hover:shadow-gold-500/20 active:scale-[0.98]"
+                               hover:bg-gold-400 hover:shadow-lg hover:shadow-gold-500/20"
                   >
                     {loading ? (
                       <span className="flex items-center gap-2.5">
@@ -214,9 +214,9 @@ export default function SignUpPage() {
               </motion.div>
             </form>
 
-            <motion.p variants={fadeUp} className="text-center text-sm text-luxury-400 mt-8">
+            <motion.p variants={fadeUp} className="text-center text-sm text-gold-500/40 mt-8">
               Already have an account?{' '}
-              <Link href="/auth/signin" className="text-espresso font-semibold hover:text-gold-600 transition-colors">
+              <Link href="/auth/signin" className="text-gold-500 font-bold hover:text-gold-400 transition-colors">
                 Sign in
               </Link>
             </motion.p>

@@ -2,20 +2,19 @@
 
 export default function Input({ label, error, className = '', ...props }) {
   return (
-    <div className="space-y-1">
+    <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-espresso tracking-wide uppercase">
+        <label className="block text-xs font-medium text-dark-300 tracking-[0.15em] uppercase mb-2">
           {label}
         </label>
       )}
       <input
-        className={`w-full px-4 py-3 border border-luxury-200 bg-white rounded-none
-          focus:ring-2 focus:ring-gold-500 focus:border-gold-500 
-          transition-all duration-200 outline-none text-espresso
-          placeholder:text-luxury-400 ${error ? 'border-red-500' : ''} ${className}`}
+        className={`input-field ${error ? 'input-field-error' : ''} ${className}`}
         {...props}
       />
-      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+      {error && (
+        <p className="mt-1.5 text-[11px] text-red-400 tracking-wider">{error}</p>
+      )}
     </div>
   );
 }

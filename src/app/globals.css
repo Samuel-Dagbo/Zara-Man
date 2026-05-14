@@ -2,82 +2,263 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@200;300;400;500;600;700;800&display=swap');
 
 * {
   scroll-behavior: smooth;
 }
 
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: #FFF8F0;
-  color: #2C1810;
+:root {
+  --gold-50: #FFFBEB;
+  --gold-100: #FEF3C7;
+  --gold-200: #FDE68A;
+  --gold-300: #FCD34D;
+  --gold-400: #FBBF24;
+  --gold-500: #D4AF37;
+  --gold-600: #B8860B;
+  --gold-700: #996F00;
+  --gold-800: #7A5C00;
+  --gold-900: #5C4500;
+  --gold-950: #3D2E00;
+
+  --dark-950: #F5ECD8;
+  --dark-900: #FFFAF2;
+  --dark-800: #F0E4CC;
+  --dark-700: #E8D8B8;
+  --dark-600: #D0BC94;
+  --dark-500: #A08860;
+  --dark-400: #7A6340;
+  --dark-300: #5C4A30;
+  --dark-200: #3D3020;
+  --dark-100: #2A2015;
+  --dark-50:  #1a1a1a;
+
+  --color-white: #2A2015;
+  --color-gold-text: #2A2015;
+  --color-gold-text-400: #3D3020;
+  --color-gold-text-300: #5C4A30;
+  --bg-white: #FFFAF2;
+  --bg-black: #F0E4CC;
+  --crème: #F5ECD8;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', Georgia, serif;
+.dark {
+  --gold-50: #FDF8E8;
+  --gold-100: #FAF0C8;
+  --gold-200: #F5E08E;
+  --gold-300: #EFCF54;
+  --gold-400: #E8BD2A;
+  --gold-500: #D4A847;
+  --gold-600: #B8922E;
+  --gold-700: #8A6D22;
+  --gold-800: #5C4917;
+  --gold-900: #2E240B;
+
+  --dark-50: #f8f8f8;
+  --dark-100: #e8e8e8;
+  --dark-200: #d0d0d0;
+  --dark-300: #a8a8a8;
+  --dark-400: #808080;
+  --dark-500: #606060;
+  --dark-600: #404040;
+  --dark-700: #2a2a2a;
+  --dark-800: #1a1a1a;
+  --dark-900: #111111;
+  --dark-950: #080808;
+
+  --color-white: #f8f8f8;
+  --color-gold-text: #D4A847;
+  --color-gold-text-400: #E8BD2A;
+  --color-gold-text-300: #EFCF54;
+  --bg-white: #111111;
+  --bg-black: #080808;
+  --crème: #080808;
 }
 
-::selection {
-  background-color: #C8A45C;
-  color: white;
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--dark-950);
+    color: var(--color-white);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  ::selection {
+    background-color: var(--gold-500);
+    color: #080808;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--dark-800);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--gold-500);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-600);
+  }
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-}
+@layer utilities {
+  .text-white {
+    color: var(--color-white) !important;
+  }
 
-::-webkit-scrollbar-track {
-  background: #F7F5F0;
-}
+  .bg-black {
+    background-color: var(--bg-black) !important;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: #C8A45C;
-  border-radius: 4px;
-}
+  .text-white\/80 {
+    color: color-mix(in srgb, var(--color-white) 80%, transparent) !important;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #B8860B;
+  .text-white\/60 {
+    color: color-mix(in srgb, var(--color-white) 60%, transparent) !important;
+  }
+
+  .border-white\/5 {
+    border-color: color-mix(in srgb, var(--color-white) 5%, transparent) !important;
+  }
+
+  .border-white\/10 {
+    border-color: color-mix(in srgb, var(--color-white) 10%, transparent) !important;
+  }
+
+  .text-gold-500 {
+    color: var(--color-gold-text) !important;
+  }
+
+  .text-gold-400 {
+    color: var(--color-gold-text-400) !important;
+  }
+
+  .text-gold-300 {
+    color: var(--color-gold-text-300) !important;
+  }
+
+  .text-gold-500\/50 {
+    color: color-mix(in srgb, var(--color-gold-text) 50%, transparent) !important;
+  }
+
+  .text-gold-500\/60 {
+    color: color-mix(in srgb, var(--color-gold-text) 60%, transparent) !important;
+  }
+
+  .text-gold-500\/40 {
+    color: color-mix(in srgb, var(--color-gold-text) 40%, transparent) !important;
+  }
+
+  .text-gold-500\/30 {
+    color: color-mix(in srgb, var(--color-gold-text) 30%, transparent) !important;
+  }
+
+  .text-gold-500\/70 {
+    color: color-mix(in srgb, var(--color-gold-text) 70%, transparent) !important;
+  }
+
+  .text-gold-400\/70 {
+    color: color-mix(in srgb, var(--color-gold-text-400) 70%, transparent) !important;
+  }
+
+  .text-gold-400\/40 {
+    color: color-mix(in srgb, var(--color-gold-text-400) 40%, transparent) !important;
+  }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-espresso text-cream px-8 py-3 rounded-none font-medium 
-           tracking-wider uppercase text-sm transition-all duration-300
-           hover:bg-gold-500 hover:text-espresso hover:shadow-lg hover:-translate-y-0.5;
+    @apply px-10 py-4 font-bold 
+           tracking-[0.2em] uppercase text-xs transition-all duration-500
+           relative overflow-hidden;
+    background-color: var(--gold-500);
+    color: var(--dark-950);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--gold-400);
+    box-shadow: 0 20px 25px -5px color-mix(in srgb, var(--gold-500) 40%, transparent), 0 8px 10px -6px color-mix(in srgb, var(--gold-500) 40%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(to right, transparent, color-mix(in srgb, white 30%, transparent), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .btn-primary:hover::after {
+    transform: translateX(100%);
   }
 
   .btn-secondary {
-    @apply border-2 border-espresso text-espresso px-8 py-3 rounded-none 
-           font-medium tracking-wider uppercase text-sm transition-all duration-300
-           hover:bg-espresso hover:text-cream hover:shadow-lg hover:-translate-y-0.5;
+    @apply px-10 py-4 
+           font-bold tracking-[0.2em] uppercase text-xs transition-all duration-500;
+    border: 2px solid color-mix(in srgb, var(--gold-500) 60%, transparent);
+    color: var(--color-gold-text);
   }
 
-  .btn-gold {
-    @apply bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-3 
-           rounded-none font-medium tracking-wider uppercase text-sm 
-           transition-all duration-300 hover:from-gold-600 hover:to-gold-700
-           shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  .btn-secondary:hover {
+    background-color: var(--gold-500);
+    color: var(--dark-950);
+    border-color: var(--gold-500);
+    box-shadow: 0 20px 25px -5px color-mix(in srgb, var(--gold-500) 20%, transparent);
+    transform: translateY(-2px);
   }
 
   .btn-ghost {
-    @apply px-4 py-2 text-sm tracking-wider uppercase transition-all duration-200
-           hover:bg-luxury-100 text-luxury-600 hover:text-espresso;
+    @apply px-6 py-3 text-xs tracking-[0.15em] uppercase font-semibold transition-all duration-300;
+    color: color-mix(in srgb, var(--color-gold-text) 70%, transparent);
   }
 
-  .btn-soft {
-    @apply px-4 py-2 text-sm tracking-wider uppercase rounded-lg transition-all duration-200
-           bg-luxury-50 text-luxury-600 hover:bg-luxury-100 hover:text-espresso;
+  .btn-ghost:hover {
+    color: var(--color-gold-text);
+    background-color: color-mix(in srgb, var(--gold-500) 10%, transparent);
   }
 
   .premium-card {
-    @apply bg-white rounded-xl shadow-sm border border-luxury-100 
-           hover:shadow-md hover:border-luxury-200 transition-all duration-300;
+    border: 1px solid color-mix(in srgb, var(--gold-500) 15%, transparent);
+    background: var(--bg-white);
+    transition: all 0.5s;
   }
 
-  .premium-card-dark {
-    @apply bg-espresso rounded-xl shadow-lg border border-luxury-700
-           hover:shadow-xl hover:border-gold-500/30 transition-all duration-300;
+  .premium-card:hover {
+    border-color: color-mix(in srgb, var(--gold-500) 40%, transparent);
+  }
+
+  .premium-card-light {
+    border: 1px solid color-mix(in srgb, var(--gold-500) 10%, transparent);
+    background: color-mix(in srgb, var(--dark-100) 40%, transparent);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    transition: all 0.5s;
+  }
+
+  .premium-card-light:hover {
+    border-color: color-mix(in srgb, var(--gold-500) 30%, transparent);
+  }
+
+  .premium-card-gold {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--gold-500) 20%, transparent), color-mix(in srgb, var(--gold-600) 10%, transparent), color-mix(in srgb, var(--gold-500) 5%, transparent));
+    border: 1px solid color-mix(in srgb, var(--gold-500) 30%, transparent);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    transition: all 0.5s;
+  }
+
+  .premium-card-gold:hover {
+    border-color: color-mix(in srgb, var(--gold-500) 60%, transparent);
   }
 
   .premium-table {
@@ -85,15 +266,22 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .premium-table thead tr {
-    @apply bg-gradient-to-r from-luxury-50 to-luxury-100/50;
+    background-color: color-mix(in srgb, var(--gold-500) 10%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--gold-500) 20%, transparent);
   }
 
   .premium-table th {
-    @apply text-left p-4 text-xs tracking-wider uppercase text-luxury-500 font-semibold;
+    @apply text-left p-4 text-[10px] tracking-[0.2em] uppercase font-semibold;
+    color: color-mix(in srgb, var(--color-gold-text) 80%, transparent);
   }
 
   .premium-table tbody tr {
-    @apply border-t border-luxury-100/50 transition-all duration-200 hover:bg-luxury-50/80;
+    border-top: 1px solid color-mix(in srgb, var(--gold-500) 10%, transparent);
+    transition: all 0.2s;
+  }
+
+  .premium-table tbody tr:hover {
+    background-color: color-mix(in srgb, var(--gold-500) 5%, transparent);
   }
 
   .premium-table td {
@@ -101,118 +289,162 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .section-heading {
-    @apply text-4xl md:text-5xl font-display font-semibold text-espresso mb-4;
+    @apply font-display font-bold leading-tight;
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    color: var(--color-gold-text);
   }
 
   .section-subtitle {
-    @apply text-luxury-500 text-lg max-w-2xl mx-auto;
+    @apply text-base md:text-lg max-w-2xl mx-auto leading-relaxed;
+    color: color-mix(in srgb, var(--color-gold-text) 50%, transparent);
   }
 
   .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl rounded-xl;
+    border: 1px solid color-mix(in srgb, var(--gold-500) 10%, transparent);
+    background: color-mix(in srgb, var(--bg-white) 70%, transparent);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
   }
 
-  .glass-card-dark {
-    @apply bg-espresso/60 backdrop-blur-md border border-white/10 shadow-xl rounded-xl;
+  .glass-card-gold {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--gold-500) 10%, transparent), color-mix(in srgb, var(--gold-600) 5%, transparent));
+    border: 1px solid color-mix(in srgb, var(--gold-500) 20%, transparent);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
   }
 
   .input-field {
-    @apply w-full px-4 py-3 border border-luxury-200 bg-white rounded-lg
-           focus:ring-2 focus:ring-gold-500/30 focus:border-gold-500 
-           transition-all duration-200 outline-none text-espresso
-           placeholder:text-luxury-400;
+    @apply w-full px-5 py-3.5 text-sm outline-none transition-all duration-300;
+    background-color: color-mix(in srgb, var(--dark-950) 80%, transparent);
+    border: 1px solid color-mix(in srgb, var(--gold-500) 20%, transparent);
+    color: var(--color-white);
+  }
+
+  .input-field:focus {
+    border-color: color-mix(in srgb, var(--gold-500) 60%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold-500) 30%, transparent);
+  }
+
+  .input-field::placeholder {
+    color: color-mix(in srgb, var(--color-white) 30%, transparent);
   }
 
   .input-field-error {
-    @apply border-red-300 focus:ring-red-500/30 focus:border-red-500;
+    border-color: color-mix(in srgb, red 50%, transparent);
+  }
+
+  .input-field-error:focus {
+    border-color: red;
+    box-shadow: 0 0 0 3px color-mix(in srgb, red 20%, transparent);
   }
 
   .badge {
-    @apply inline-flex items-center px-3 py-1 text-xs tracking-wider uppercase rounded-full font-medium;
+    @apply inline-flex items-center px-3 py-1 text-[10px] tracking-[0.15em] uppercase font-semibold;
   }
 
   .badge-gold {
-    @apply badge bg-gold-500/10 text-gold-700;
+    background-color: color-mix(in srgb, var(--gold-500) 20%, transparent);
+    color: var(--color-gold-text);
+    border: 1px solid color-mix(in srgb, var(--gold-500) 30%, transparent);
   }
 
   .badge-green {
-    @apply badge bg-emerald-50 text-emerald-700;
+    background-color: color-mix(in srgb, #10B981 10%, transparent);
+    color: #059669;
+    border: 1px solid color-mix(in srgb, #10B981 20%, transparent);
   }
 
   .badge-red {
-    @apply badge bg-red-50 text-red-700;
+    background-color: color-mix(in srgb, #EF4444 10%, transparent);
+    color: #DC2626;
+    border: 1px solid color-mix(in srgb, #EF4444 20%, transparent);
   }
 
   .badge-blue {
-    @apply badge bg-blue-50 text-blue-700;
+    background-color: color-mix(in srgb, #3B82F6 10%, transparent);
+    color: #2563EB;
+    border: 1px solid color-mix(in srgb, #3B82F6 20%, transparent);
   }
 
   .badge-purple {
-    @apply badge bg-purple-50 text-purple-700;
-  }
-
-  .badge-yellow {
-    @apply badge bg-amber-50 text-amber-700;
+    background-color: color-mix(in srgb, #8B5CF6 10%, transparent);
+    color: #7C3AED;
+    border: 1px solid color-mix(in srgb, #8B5CF6 20%, transparent);
   }
 
   .badge-indigo {
-    @apply badge bg-indigo-50 text-indigo-700;
+    background-color: color-mix(in srgb, #6366F1 10%, transparent);
+    color: #4F46E5;
+    border: 1px solid color-mix(in srgb, #6366F1 20%, transparent);
+  }
+
+  .badge-yellow {
+    background-color: color-mix(in srgb, #EAB308 10%, transparent);
+    color: #CA8A04;
+    border: 1px solid color-mix(in srgb, #EAB308 20%, transparent);
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold-500 to-gold-700;
+    background: linear-gradient(to right, var(--color-gold-text-300), var(--color-gold-text), var(--color-gold-text-300));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .text-gradient-light {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-cream via-gold-200 to-gold-500;
+    background: linear-gradient(to right, var(--color-gold-text-400), var(--color-gold-text-300), var(--color-gold-text));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.7s ease-out;
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, color-mix(in srgb, var(--gold-400) 60%, transparent), transparent);
   }
 
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .gold-divider-thick {
+    height: 2px;
+    width: 4rem;
+    background: linear-gradient(to right, transparent, var(--gold-500), transparent);
+  }
+
+  .focus-ring-gold {
+    @apply focus:outline-none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold-500) 30%, transparent);
+  }
+
+  .premium-gradient {
+    background: linear-gradient(135deg, var(--dark-950) 0%, var(--dark-800) 50%, var(--dark-950) 100%);
+  }
+
+  .premium-gradient-gold {
+    background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 50%, var(--gold-500) 100%);
+  }
+
+  .gold-gradient-text {
+    background: linear-gradient(90deg, var(--color-gold-text), var(--color-gold-text-400), var(--color-gold-text));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: goldShine 3s linear infinite;
   }
 
   .shimmer-bg {
-    background: linear-gradient(90deg, transparent, rgba(200, 164, 92, 0.05), transparent);
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--gold-500) 6%, transparent), transparent);
     background-size: 200% 100%;
     animation: shimmer 2s infinite linear;
   }
 
-  .gold-border-gradient {
-    border: 1px solid transparent;
-    background-clip: padding-box;
-    border-image: linear-gradient(to right, #C8A45C, #B8860B, #C8A45C) 1;
+  .gold-border-glow {
+    box-shadow: 0 0 15px color-mix(in srgb, var(--gold-500) 15%, transparent), inset 0 0 15px color-mix(in srgb, var(--gold-500) 5%, transparent);
+    border: 1px solid color-mix(in srgb, var(--gold-500) 25%, transparent);
   }
 
-  .hover-lift {
-    @apply transition-all duration-300;
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    @apply shadow-xl;
-  }
-
-  .premium-gradient {
-    background: linear-gradient(135deg, #2C1810 0%, #4D4030 50%, #2C1810 100%);
-  }
-
-  .premium-gradient-gold {
-    background: linear-gradient(135deg, #C8A45C 0%, #B8860B 50%, #C8A45C 100%);
-  }
-
-  .gold-divider {
-    @apply h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent w-20 mx-auto;
-  }
-
-  .focus-ring-gold {
-    @apply focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2;
+  .gold-border-glow:hover {
+    box-shadow: 0 0 30px color-mix(in srgb, var(--gold-500) 30%, transparent), inset 0 0 20px color-mix(in srgb, var(--gold-500) 10%, transparent);
+    border-color: color-mix(in srgb, var(--gold-500) 50%, transparent);
   }
 }
 
@@ -220,4 +452,20 @@ h1, h2, h3, h4, h5, h6 {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes goldShine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }

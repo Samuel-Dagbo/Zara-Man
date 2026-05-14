@@ -5,8 +5,9 @@ export async function middleware(request) {
   const { pathname } = request.nextUrl;
   const isDashboard = pathname.startsWith('/dashboard');
   const isAuthPage = pathname === '/auth/signin' || pathname === '/auth/signup';
+  const isCheckout = pathname === '/checkout';
 
-  if (!isDashboard && !isAuthPage) {
+  if (!isDashboard && !isAuthPage && !isCheckout) {
     return NextResponse.next();
   }
 
@@ -31,6 +32,12 @@ export async function middleware(request) {
     }
   }
 
+  if (isCheckout && !token) {
+    const signInUrl = new URL('/auth/signin', request.url);
+    signInUrl.searchParams.set('callbackUrl', '/checkout');
+    return NextResponse.redirect(signInUrl);
+  }
+
   if (isAuthPage && token) {
     const dashboardUrl = token.role === 'admin' ? '/dashboard/admin' : '/shop';
     return NextResponse.redirect(new URL(dashboardUrl, request.url));
@@ -40,5 +47,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/auth/signin', '/auth/signup'],
+  matcher: ['/dashboard/:path*', '/auth/signin', '/auth/signup', '/checkout'],
 };

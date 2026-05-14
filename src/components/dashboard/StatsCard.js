@@ -4,13 +4,12 @@ import { motion } from 'framer-motion';
 
 export default function StatsCard({ title, value, icon: Icon, color = 'gold', subtitle }) {
   const colors = {
-    gold: 'bg-gradient-to-br from-gold-500/20 to-gold-500/5 text-gold-600',
-    blue: 'bg-gradient-to-br from-blue-500/20 to-blue-500/5 text-blue-600',
-    green: 'bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 text-emerald-600',
-    purple: 'bg-gradient-to-br from-purple-500/20 to-purple-500/5 text-purple-600',
-    red: 'bg-gradient-to-br from-red-500/20 to-red-500/5 text-red-600',
-    yellow: 'bg-gradient-to-br from-amber-500/20 to-amber-500/5 text-amber-600',
-    wine: 'bg-gradient-to-br from-red-800/20 to-red-800/5 text-red-800',
+    gold: 'border-gold-500/20 text-gold-500 bg-gold-500/5',
+    blue: 'border-blue-500/20 text-blue-400 bg-blue-500/5',
+    green: 'border-emerald-500/20 text-emerald-400 bg-emerald-500/5',
+    purple: 'border-purple-500/20 text-purple-400 bg-purple-500/5',
+    red: 'border-red-500/20 text-red-400 bg-red-500/5',
+    wine: 'border-rose-800/20 text-rose-400 bg-rose-800/5',
   };
 
   return (
@@ -21,11 +20,11 @@ export default function StatsCard({ title, value, icon: Icon, color = 'gold', su
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs text-luxury-500 tracking-wider uppercase font-medium">{title}</p>
-          <p className="font-display text-3xl font-bold text-espresso mt-2 group-hover:text-gold-600 transition-colors">{value}</p>
-          {subtitle && <p className="text-xs text-luxury-400 mt-1">{subtitle}</p>}
+          <p className="text-[10px] text-dark-400 tracking-[0.2em] uppercase font-medium">{title}</p>
+          <p className="font-display text-3xl font-bold text-white mt-2 group-hover:text-gold-500 transition-colors">{value}</p>
+          {subtitle && <p className="text-[10px] text-dark-500 mt-1 tracking-wider">{subtitle}</p>}
         </div>
-        <div className={`w-12 h-12 flex items-center justify-center rounded-xl ${colors[color]} group-hover:scale-110 transition-transform duration-300`}>
+        <div className={`w-12 h-12 flex items-center justify-center border ${colors[color]} group-hover:scale-110 transition-transform duration-300`}>
           <Icon className="w-6 h-6" />
         </div>
       </div>

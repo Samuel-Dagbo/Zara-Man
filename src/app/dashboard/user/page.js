@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import StatsCard from '@/components/dashboard/StatsCard';
 import { StatsCardSkeleton } from '@/components/ui/Skeleton';
@@ -42,8 +42,8 @@ export default function UserDashboard() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-3xl font-display font-bold text-espresso">Welcome back{session?.user?.name ? `, ${session.user.name}` : ''}</h1>
-          <p className="text-luxury-500 mt-1">Here is your account overview.</p>
+          <h1 className="text-3xl font-display font-bold text-gold-500">Welcome back{session?.user?.name ? `, ${session.user.name}` : ''}</h1>
+          <p className="text-gold-500/50 mt-1 text-sm">Here is your account overview.</p>
         </div>
         <EmptyState
           icon={HiOutlineExclamationCircle}
@@ -59,10 +59,10 @@ export default function UserDashboard() {
   return (
     <div>
       <div className="mb-6 lg:mb-8">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-display font-bold text-espresso leading-tight">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-display font-bold text-gold-500 leading-tight">
           Welcome back{session?.user?.name ? `, ${session.user.name}` : ''}
         </h1>
-        <p className="text-sm lg:text-base text-luxury-500 mt-1">Here is your account overview.</p>
+        <p className="text-sm lg:text-base text-gold-500/50 mt-1">Here is your account overview.</p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
@@ -79,9 +79,9 @@ export default function UserDashboard() {
       </div>
 
       <div className="premium-card overflow-hidden">
-        <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-luxury-100 flex items-center justify-between bg-gradient-to-r from-luxury-50/50 to-transparent">
-          <h2 className="font-display text-base sm:text-lg font-semibold text-espresso">Recent Orders</h2>
-          <Link href="/dashboard/user/orders" className="text-xs tracking-wider uppercase text-gold-500 hover:text-gold-600 font-medium transition-colors">
+        <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-gold-500/10 flex items-center justify-between bg-dark-900/30">
+          <h2 className="font-display text-base sm:text-lg font-bold text-gold-500">Recent Orders</h2>
+          <Link href="/dashboard/user/orders" className="text-[10px] tracking-wider uppercase text-gold-500 hover:text-gold-400 font-bold transition-colors">
             View All
           </Link>
         </div>
@@ -91,11 +91,11 @@ export default function UserDashboard() {
               <div className="space-y-4">
                 {Array.from({ length: 3 }).map((_, i) => (
                   <div key={i} className="flex gap-4 animate-pulse">
-                    <div className="h-4 bg-luxury-200 w-24 rounded" />
-                    <div className="h-4 bg-luxury-200 w-16 rounded" />
-                    <div className="h-4 bg-luxury-200 w-20 rounded" />
-                    <div className="h-4 bg-luxury-200 w-16 rounded" />
-                    <div className="h-4 bg-luxury-200 w-24 rounded" />
+                    <div className="h-4 bg-gold-500/10 w-24" />
+                    <div className="h-4 bg-gold-500/10 w-16" />
+                    <div className="h-4 bg-gold-500/10 w-20" />
+                    <div className="h-4 bg-gold-500/10 w-16" />
+                    <div className="h-4 bg-gold-500/10 w-24" />
                   </div>
                 ))}
               </div>
@@ -123,10 +123,10 @@ export default function UserDashboard() {
                 {orders.slice(0, 5).map((order) => (
                   <tr key={order._id}>
                     <td>
-                      <span className="text-sm font-medium text-espresso">#{order._id.slice(-6).toUpperCase()}</span>
+                      <span className="text-sm font-bold text-gold-400">#{order._id.slice(-6).toUpperCase()}</span>
                     </td>
-                    <td className="text-sm text-luxury-600">{order.items.length} item(s)</td>
-                    <td className="text-sm font-semibold">{formatPrice(order.totalAmount)}</td>
+                    <td className="text-sm text-gold-500/50">{order.items.length} item(s)</td>
+                    <td className="text-sm font-bold text-gold-500">{formatPrice(order.totalAmount)}</td>
                     <td>
                       <span className={`badge ${
                         order.status === 'delivered' ? 'badge-green' :
@@ -137,7 +137,7 @@ export default function UserDashboard() {
                         {order.status}
                       </span>
                     </td>
-                    <td className="text-sm text-luxury-500">
+                    <td className="text-sm text-gold-500/50">
                       {new Date(order.createdAt).toLocaleDateString()}
                     </td>
                   </tr>
